@@ -6,9 +6,10 @@
 <title>40ACL Compliance Desk</title>
 <style>
   :root{
-    --bg:#0b0f14; --panel:#12171f; --panel2:#171d27; --bd:#232b37;
-    --t1:#f3f6fb; --t2:#aab4c4; --t3:#6b7686; --accent:#2f6bff; --accent2:#7aa2ff;
-    --ok:#34d399; --warn:#fbbf24; --bad:#f87171;
+    /* 40 Acre Conservation League brand — forest green #1F3F2D + gold #C9A84C */
+    --bg:#f7f5ef; --panel:#ffffff; --panel2:#f3f0e6; --bd:#e4dfd1;
+    --t1:#1e2a20; --t2:#55625a; --t3:#8a938a; --accent:#1F3F2D; --accent2:#2e5c42;
+    --ok:#2f8f5b; --warn:#b98f1f; --bad:#c0564a; --gold:#C9A84C;
     --mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
     --r:12px;
@@ -20,11 +21,11 @@
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px;}
   /* top bar */
   header{border-bottom:1px solid var(--bd);background:var(--bg);position:sticky;top:0;z-index:5;}
-  .bar{max-width:1120px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;gap:14px;}
-  .logo{width:26px;height:26px;border:1.5px solid var(--accent);border-radius:6px;display:flex;
-        align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;color:var(--accent);}
-  .brand{font-family:var(--mono);font-weight:700;letter-spacing:.14em;font-size:13px;color:var(--t1);}
-  .brand small{color:var(--t3);font-weight:500;letter-spacing:.04em;}
+  .bar{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;}
+  .logo{height:46px;width:auto;display:block;}
+  .brand{font-family:var(--mono);font-weight:700;letter-spacing:.1em;font-size:12px;color:var(--accent);
+         border-left:1px solid var(--bd);padding-left:14px;}
+  .brand small{display:block;color:var(--t3);font-weight:500;letter-spacing:.02em;text-transform:none;font-size:11px;margin-top:1px;}
   .netpill{margin-left:auto;font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;
            border:1px solid var(--bd);color:var(--t2);}
   .netpill b{color:var(--ok);}
@@ -40,7 +41,7 @@
   .stat.treated .n{color:var(--ok);}
   .stat.remaining .n{color:var(--warn);}
   .progress{height:10px;border-radius:999px;background:var(--panel2);border:1px solid var(--bd);overflow:hidden;margin:16px 0 2px;}
-  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--ok));}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));}
   .progress-cap{font-family:var(--mono);font-size:12px;color:var(--t2);}
   /* sections */
   section{margin-top:40px;}
@@ -95,8 +96,8 @@
 <body>
 <header>
   <div class="bar">
-    <div class="logo">H</div>
-    <div class="brand">HUMANDATA &nbsp;<small>&middot; Compliance Desk</small></div>
+    <img class="logo" src="logo.png" alt="40 Acre Conservation League">
+    <div class="brand">COMPLIANCE DESK<small>by HumanData</small></div>
     <div class="netpill" id="netpill">&#9679; <b>online</b></div>
   </div>
 </header>
@@ -170,7 +171,7 @@
     to the League&rsquo;s secure record.
   </div>
 
-  <footer>HumanData &middot; 40ACL Compliance Desk (draft) &middot; built from the 40 Acre Conservation League working sessions.</footer>
+  <footer>Built by HumanData for the 40 Acre Conservation League &middot; draft, from the working sessions.</footer>
 </div>
 
 <script>
