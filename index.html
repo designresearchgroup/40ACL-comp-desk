@@ -112,9 +112,9 @@
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="n" id="s-funded">&mdash;</div><div class="l">Acres funded</div></div>
-    <div class="stat treated"><div class="n" id="s-treated">&mdash;</div><div class="l">Acres treated</div></div>
-    <div class="stat remaining"><div class="n" id="s-remaining">&mdash;</div><div class="l">Acres remaining (funded)</div></div>
+    <div class="stat treated"><div class="n" id="s-treated">&mdash;</div><div class="l">Acres treated (2025)</div></div>
+    <div class="stat remaining"><div class="n" id="s-remaining">&mdash;</div><div class="l">Funded, remaining</div></div>
+    <div class="stat"><div class="n" id="s-conserved">&mdash;</div><div class="l">Acres conserved</div></div>
   </div>
   <div class="progress"><i id="prog-bar"></i></div>
   <div class="progress-cap" id="prog-cap"></div>
@@ -122,6 +122,7 @@
   <section>
     <div class="sec-h"><h2>Active grants</h2><span id="grant-count"></span></div>
     <div class="grid" id="grants"></div>
+    <div class="note" style="margin-top:16px;"><b>The stewardship gap.</b> Over <b>$10M+</b> of the portfolio is restricted to <b>acquisition</b>; only <b>~$1M</b> funds long-term restoration, recreation and hydrology. The 20,000-acre goal can&rsquo;t be met on acquisition grants alone &mdash; it needs multi-year stewardship capital, impact debt, and unrestricted philanthropy. This desk exists to turn clean compliance into the evidence that unlocks it.</div>
   </section>
 
   <section>
@@ -164,11 +165,12 @@
   </section>
 
   <div class="note">
-    <b>Draft build &mdash; from the working-session records.</b> Acres (650 funded / 400 treated / 100 remaining),
-    properties and the two named funders (WCB, SNC) come from 40ACL&rsquo;s interviews. The six-grant list, targets,
-    vendors and deadlines below them are <b>sample data</b> pending the real records (the Phase I proposal + the
-    grant files). Field logs save to this browser only (localStorage) in this draft; the production build syncs
-    to the League&rsquo;s secure record.
+    <b>What&rsquo;s live.</b> The six active grants, their $ amounts, the properties, the 404.98 acres treated and the
+    stewardship gap come from 40ACL&rsquo;s Phase I proposal and interviews &mdash; real and confirmed. Still pulling from the
+    grant files: each grant&rsquo;s <b>acre targets, reporting cadence and deadlines</b>, and the <b>vendor roster</b> (from
+    partner invoices). Field logs save to this browser (localStorage) in this draft; the production build syncs to
+    the League&rsquo;s secure record, and layers in the digital-twin spatial data (PG&amp;E, water, CalFIRE, parcels, snowpack)
+    and the forestsat.space monitoring pilot.
   </div>
 
   <footer>Built by HumanData for the 40 Acre Conservation League &middot; draft, from the working sessions.</footer>
@@ -176,19 +178,22 @@
 
 <script>
 // ---- seed (real where known, [sample] otherwise) ----
-const PROPS = ["Emigrant Gap", "Leidesdorff"];
+const PROPS = ["Tahoe Forest Gateway (Leidesdorff)", "Blue Canyon Bar"];
+// Real grant portfolio from the Phase I proposal (May 2026). $M amounts confirmed;
+// per-grant acre targets and reporting deadlines pull from the grant files.
 const GRANTS = [
-  {id:"wcb",   name:"Land Acquisition & Forest Health", funder:"Wildlife Conservation Board", target:300, treated:220, due:"2026-12-15", owner:"Jade", real:true},
-  {id:"snc",   name:"Wildfire & Forest Resilience",     funder:"Sierra Nevada Conservancy",   target:250, treated:150, due:"2027-01-31", owner:"Jade", real:true},
-  {id:"g3",    name:"Fuel Reduction (sample)",          funder:"State grant [confirm]",       target:60,  treated:20,  due:"2026-11-20", owner:"[confirm]"},
-  {id:"g4",    name:"Reforestation (sample)",           funder:"State grant [confirm]",       target:40,  treated:10,  due:"2026-12-05", owner:"[confirm]"}
+  {funder:"Wildlife Conservation Board", purpose:"Land acquisition",         amount:2.27, real:true},
+  {funder:"Wildlife Conservation Board", purpose:"Forest health",            amount:2.41, real:true},
+  {funder:"Wildlife Conservation Board", purpose:"Recreation planning",      amount:4.30, real:true},
+  {funder:"Sierra Nevada Conservancy",   purpose:"Forest health",            amount:2.30, real:true},
+  {funder:"Sierra Nevada Conservancy",   purpose:"Blue Canyon expansion",    amount:0.55, real:true},
+  {funder:"Sierra Nevada Conservancy",   purpose:"Climate Bond allocation",  amount:5.00, real:true},
+  {funder:"Legislative — Asm. Gipson", purpose:"Direct allocation",      amount:3.00, real:true, leg:true}
 ];
 const VENDORS = [
-  {name:"[sample] Sierra Fuels Crew", prop:"Emigrant Gap", acres:180, invoice:"2026-09-28", status:"ok"},
-  {name:"[sample] Blue Canyon Forestry", prop:"Leidesdorff", acres:140, invoice:"2026-10-05", status:"ok"},
-  {name:"[sample] Ridge Reforest Co.", prop:"Emigrant Gap", acres:40, invoice:"pending", status:"warn"}
+  {name:"Restoration vendor roster", prop:"from partner invoices", acres:"—", invoice:"from grant files", status:"warn"}
 ];
-const FUNDED = 650, TREATED_BASE = 400;
+const CONSERVED="700+", TREATED_BASE=404.98, REMAINING=100, GOAL="20,000";
 
 const $ = s => document.querySelector(s);
 const esc = s => (s==null?"":String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -199,47 +204,34 @@ function loggedAcres(){ return logs().reduce((s,l)=>s+(parseFloat(l.acres)||0),0
 
 function renderStats(){
   const treated = TREATED_BASE + loggedAcres();
-  const remaining = Math.max(0, FUNDED - treated);
-  $("#s-funded").textContent = FUNDED;
-  $("#s-treated").textContent = Math.round(treated*10)/10;
-  $("#s-remaining").textContent = Math.round(remaining*10)/10;
-  const pct = Math.min(100, Math.round(treated/FUNDED*100));
+  $("#s-treated").textContent = Math.round(treated*100)/100;
+  $("#s-remaining").textContent = REMAINING;
+  $("#s-conserved").textContent = CONSERVED;
+  const pct = Math.min(100, Math.round(treated/(TREATED_BASE+REMAINING)*100));
   $("#prog-bar").style.width = pct+"%";
-  $("#prog-cap").textContent = pct+"% of funded acres treated · "+(Math.round(remaining*10)/10)+" funded acres remaining"+
-    (loggedAcres()?(" · includes "+(Math.round(loggedAcres()*10)/10)+" from field logs"):"");
-}
-function daysUntil(d){ return Math.ceil((new Date(d) - new Date())/86400000); }
-function dueTag(days){
-  if(days<0) return '<span class="tag bad">overdue</span>';
-  if(days<=14) return '<span class="tag warn">'+days+'d</span>';
-  if(days<=60) return '<span class="tag mute">'+days+'d</span>';
-  return '<span class="tag ok">on track</span>';
+  $("#prog-cap").textContent = pct+"% of currently-funded restoration treated · 404.98 ac treated in 2025, 200,000 bd ft milled for the Nature Center · goal "+GOAL+" ac by 2030"+
+    (loggedAcres()?(" · +"+(Math.round(loggedAcres()*100)/100)+" from field logs"):"");
 }
 function renderGrants(){
-  $("#grant-count").textContent = GRANTS.length+" grants · "+GRANTS.filter(g=>g.real).length+" confirmed from interviews";
+  const grants = GRANTS.filter(g=>!g.leg);
+  const total = GRANTS.reduce((s,g)=>s+g.amount,0);
+  $("#grant-count").textContent = grants.length+" active grants · 4 state-managed · $"+total.toFixed(2)+"M portfolio incl. legislative";
   $("#grants").innerHTML = GRANTS.map(g=>{
-    const pct = Math.min(100, Math.round(g.treated/g.target*100));
-    const days = daysUntil(g.due);
-    const chip = g.real ? '<span class="tag ok">confirmed</span>' : '<span class="tag mute">sample</span>';
-    return `<div class="card"><div class="top"><div><div class="gname">${esc(g.name)}</div>
-      <div class="gfun">${esc(g.funder)}</div></div>${chip}</div>
-      <div class="mini"><i style="width:${pct}%"></i></div>
-      <div class="row"><span>Treated</span><b>${g.treated} / ${g.target} ac</b></div>
-      <div class="row"><span>Remaining</span><b>${g.target-g.treated} ac</b></div>
-      <div class="due">Next report <b>${g.due}</b> ${dueTag(days)} &middot; ${esc(g.owner)}</div></div>`;
+    const tag = g.leg ? '<span class="tag mute">legislative</span>' : '<span class="tag ok">active</span>';
+    return `<div class="card"><div class="top"><div><div class="gname">${esc(g.purpose)}</div>
+      <div class="gfun">${esc(g.funder)}</div></div>${tag}</div>
+      <div style="font-size:26px;font-weight:700;color:var(--accent);margin:10px 0 2px;letter-spacing:-.01em;">$${g.amount.toFixed(2)}M</div>
+      <div class="due">Acre target &amp; reporting cadence <b>from grant files</b></div></div>`;
   }).join("");
 }
 function renderVendors(){
   $("#vendors").innerHTML = VENDORS.map(v=>`<tr><td>${esc(v.name)}</td><td>${esc(v.prop)}</td>
-    <td><b>${v.acres} ac</b></td><td>${esc(v.invoice)}</td>
-    <td><span class="tag ${v.status}">${v.status==='ok'?'reconciled':'needs review'}</span></td></tr>`).join("");
+    <td><b>${esc(v.acres)}</b></td><td>${esc(v.invoice)}</td>
+    <td><span class="tag warn">pending files</span></td></tr>`).join("");
 }
 function renderDeadlines(){
-  const rows = GRANTS.slice().sort((a,b)=>new Date(a.due)-new Date(b.due));
-  $("#deadlines").innerHTML = rows.map(g=>{
-    const d = daysUntil(g.due);
-    return `<tr><td>${esc(g.funder)}</td><td><b>${g.due}</b></td><td>${dueTag(d)}</td><td>${esc(g.owner)}</td></tr>`;
-  }).join("");
+  $("#deadlines").innerHTML = GRANTS.filter(g=>!g.leg).map(g=>
+    `<tr><td>${esc(g.funder)} — ${esc(g.purpose)}</td><td><b>from grant files</b></td><td><span class="tag mute">to confirm</span></td><td>Jade</td></tr>`).join("");
 }
 function renderLogs(){
   const a = logs();
@@ -251,7 +243,7 @@ function renderLogs(){
 }
 function fillSelects(){
   $("#f-prop").innerHTML = PROPS.map(p=>`<option>${esc(p)}</option>`).join("");
-  $("#f-grant").innerHTML = GRANTS.map(g=>`<option value="${g.id}">${esc(g.funder)}</option>`).join("");
+  $("#f-grant").innerHTML = GRANTS.filter(g=>!g.leg).map((g,i)=>`<option value="${i}">${esc(g.funder)} — ${esc(g.purpose)}</option>`).join("");
   $("#f-date").value = new Date().toISOString().slice(0,10);
 }
 function netState(){
