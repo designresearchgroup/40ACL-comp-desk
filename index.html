@@ -176,9 +176,14 @@
     <div class="sec-h"><h2>Import data</h2><span>drop a CSV &mdash; the desk detects what it is and maps the columns</span></div>
     <label class="import" id="dropzone">
       <b>Drop a CSV here, or click to choose a file</b>
-      <div class="sub">Grant lists, treatment records, vendor invoices &mdash; the desk reads the headers, decides which it is, and maps the columns for you to confirm before anything is imported.</div>
+      <div class="sub">Grant lists or treatment records &mdash; the desk reads the headers, decides which it is, and maps the columns. <b>Nothing is added until you accept.</b></div>
       <input type="file" id="csv-input" accept=".csv,text/csv" hidden>
     </label>
+    <div class="pbtns" style="margin-top:12px;">
+      <span style="font-size:12.5px;color:var(--t3);">Need the format? Download a ready-to-fill template:</span>
+      <button class="btn sm ghost" id="tpl-grants">Grants template</button>
+      <button class="btn sm ghost" id="tpl-logs">Treatment-logs template</button>
+    </div>
     <div class="preview" id="preview" hidden></div>
   </section>
 
@@ -464,7 +469,7 @@ function buildPreview(headers, data, type){
     <div class="pbtns"><label style="font-size:12.5px;color:var(--t2)">Import as&nbsp;
       <select id="p-type"><option value="grants"${type==='grants'?' selected':''}>Grant records</option>
       <option value="logs"${type==='logs'?' selected':''}>Treatment logs</option></select></label>
-      <button class="btn sm" id="p-import">Import ${data.length} row${data.length>1?'s':''}</button>
+      <button class="btn sm" id="p-import">Accept &amp; add ${data.length} row${data.length>1?'s':''} to the engine</button>
       <button class="btn sm ghost" id="p-cancel">Cancel</button></div>`;
   $("#p-type").onchange=e=>buildPreview(headers,data,e.target.value);
   $("#p-cancel").onclick=()=>{ p.hidden=true; pending=null; };
@@ -493,6 +498,14 @@ function handleFile(file){ if(!file) return; const rd=new FileReader();
     buildPreview(rows[0], rows.slice(1), detect(rows[0])); $("#preview").scrollIntoView({behavior:"smooth",block:"center"}); };
   rd.readAsText(file);
 }
+function downloadCSV(name, content){
+  const blob=new Blob([content],{type:"text/csv;charset=utf-8"}), url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$("#tpl-grants").onclick=()=>downloadCSV("40ACL_grants_template.csv",
+  "Funder,Purpose,Amount ($M),Reporting cadence,Next report due,Acre target\nWildlife Conservation Board,Forest health,2.41,Quarterly,2026-12-15,150\nSierra Nevada Conservancy,Blue Canyon expansion,0.55,Annual,2027-01-31,40\n");
+$("#tpl-logs").onclick=()=>downloadCSV("40ACL_treatment_logs_template.csv",
+  "Date,Property,Grant,Vendor,Acres Treated,Treatment Type\n2026-10-20,Tahoe Forest Gateway,WCB Forest health,Sierra Fuels Crew,12.5,Fuel reduction\n");
 const _dz=$("#dropzone");
 $("#csv-input").onchange=e=>handleFile(e.target.files[0]);
 _dz.addEventListener("dragover",e=>{ e.preventDefault(); _dz.classList.add("drag"); });
