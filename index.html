@@ -19,78 +19,81 @@
        font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
   a{color:var(--accent2);text-decoration:none;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px;}
-  /* top bar */
   header{border-bottom:1px solid var(--bd);background:var(--bg);position:sticky;top:0;z-index:5;}
   .bar{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;}
   .logo{height:46px;width:auto;display:block;}
   .brand{font-family:var(--mono);font-weight:700;letter-spacing:.1em;font-size:12px;color:var(--accent);
          border-left:1px solid var(--bd);padding-left:14px;}
   .brand small{display:block;color:var(--t3);font-weight:500;letter-spacing:.02em;text-transform:none;font-size:11px;margin-top:1px;}
-  .netpill{margin-left:auto;font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;
-           border:1px solid var(--bd);color:var(--t2);}
-  .netpill b{color:var(--ok);}
-  /* hero */
+  .netpill{margin-left:auto;font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;border:1px solid var(--bd);color:var(--t2);}
   .lead{margin:28px 0 10px;}
   .lead h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em;}
-  .lead p{color:var(--t2);margin:0;max-width:70ch;}
+  .lead p{color:var(--t2);margin:0;max-width:72ch;}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:10px;}
   .stats{display:flex;flex-wrap:wrap;gap:14px;margin:20px 0 6px;}
   .stat{flex:0 0 auto;min-width:150px;background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:16px 22px 14px;}
   .stat .n{font-size:32px;font-weight:700;letter-spacing:-.02em;}
   .stat .l{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-top:2px;}
-  .stat.treated .n{color:var(--ok);}
-  .stat.remaining .n{color:var(--warn);}
+  .stat.treated .n{color:var(--ok);} .stat.remaining .n{color:var(--warn);}
   .progress{height:10px;border-radius:999px;background:var(--panel2);border:1px solid var(--bd);overflow:hidden;margin:16px 0 2px;}
   .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));}
   .progress-cap{font-family:var(--mono);font-size:12px;color:var(--t2);}
-  /* sections */
   section{margin-top:40px;}
   .sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;border-bottom:1px solid var(--bd);padding-bottom:10px;}
-  .sec-h h2{font-size:17px;margin:0;}
-  .sec-h span{font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:.06em;}
+  .sec-h h2{font-size:17px;margin:0;} .sec-h span{font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:.06em;}
+  .sec-h .act{margin-left:auto;}
+  /* driving queue */
+  .queue{display:flex;flex-direction:column;gap:10px;}
+  .qitem{display:flex;align-items:center;gap:14px;border:1px solid var(--bd);border-left-width:4px;border-radius:10px;padding:13px 16px;background:var(--panel);}
+  .qitem.sev-bad{border-left-color:var(--bad);} .qitem.sev-warn{border-left-color:var(--warn);}
+  .qitem.sev-info{border-left-color:var(--gold);} .qitem.sev-ok{border-left-color:var(--ok);}
+  .qitem .qmain{flex:1;min-width:0;}
+  .qitem .qt{font-weight:700;font-size:14px;} .qitem .qs{color:var(--t2);font-size:13px;margin-top:2px;}
+  .qitem .qg{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-top:3px;}
+  .allclear{color:var(--t2);font-size:14px;padding:16px 0;}
+  .allclear b{color:var(--ok);}
   /* grant cards */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
-  .card{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;}
+  .card{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;position:relative;}
   .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-  .card .gname{font-weight:700;font-size:15px;}
+  .card .gname{font-weight:700;font-size:15px;} .card .gamt{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;}
   .card .gfun{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
   .tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;white-space:nowrap;}
   .tag.ok{color:var(--ok);border:1px solid var(--ok);} .tag.warn{color:var(--warn);border:1px solid var(--warn);}
-  .tag.bad{color:var(--bad);border:1px solid var(--bad);} .tag.mute{color:var(--t3);border:1px solid var(--bd);}
-  .card .mini{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;margin:12px 0 6px;}
+  .tag.bad{color:var(--bad);border:1px solid var(--bad);} .tag.mute{color:var(--t3);border:1px solid var(--bd);} .tag.info{color:var(--gold);border:1px solid var(--gold);}
+  .card .mini{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;margin:12px 0 5px;}
   .card .mini > i{display:block;height:100%;background:var(--accent);}
-  .card .row{display:flex;justify-content:space-between;font-size:13px;color:var(--t2);margin-top:4px;}
+  .card .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--t2);margin-top:5px;}
   .card .row b{color:var(--t1);font-family:var(--mono);}
-  .card .due{margin-top:10px;font-size:12px;color:var(--t3);}
-  .card .due b{color:var(--t1);}
-  /* table */
+  .card .cardbtns{display:flex;gap:8px;margin-top:13px;flex-wrap:wrap;}
   table{width:100%;border-collapse:collapse;font-size:13.5px;}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bd);}
   th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);font-weight:600;}
   td b{font-family:var(--mono);}
   .tablewrap{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;}
-  /* field capture */
   .capture{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:18px 20px;}
   .capture .hint{color:var(--t3);font-size:12.5px;margin:-4px 0 14px;}
   .frm{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
   .frm label{display:block;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:5px;}
-  .frm input,.frm select,.frm textarea{width:100%;background:var(--panel2);border:1px solid var(--bd);border-radius:8px;
-       color:var(--t1);font-family:var(--sans);font-size:14px;padding:9px 11px;}
+  .frm input,.frm select,.frm textarea{width:100%;background:var(--panel2);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:var(--sans);font-size:14px;padding:9px 11px;}
   .frm .full{grid-column:1 / -1;}
   .btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:700;font-size:14px;cursor:pointer;}
-  .btn:hover{filter:brightness(1.1);}
+  .btn:hover{filter:brightness(1.12);}
+  .btn.sm{padding:6px 12px;font-size:12.5px;border-radius:7px;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
+  .btn.ghost:hover{filter:none;background:rgba(31,63,45,.06);}
   .logs{margin-top:16px;}
   .logitem{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--bd);border-radius:9px;margin-bottom:8px;background:var(--panel2);}
   .logitem .la{font-family:var(--mono);font-weight:700;color:var(--accent2);min-width:66px;}
-  .logitem .lm{color:var(--t2);font-size:13px;flex:1;}
-  .logitem .ls{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:999px;}
+  .logitem .lm{color:var(--t2);font-size:13px;flex:1;} .logitem .ls{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:999px;}
   .ls.pending{color:var(--warn);border:1px solid var(--warn);} .ls.synced{color:var(--ok);border:1px solid var(--ok);}
   .empty{color:var(--t3);font-size:13px;padding:14px 0;}
-  .note{background:var(--panel2);border:1px solid var(--bd);border-left:3px solid var(--accent);border-radius:8px;
-        padding:12px 16px;color:var(--t2);font-size:13px;margin-top:18px;}
+  .note{background:var(--panel2);border:1px solid var(--bd);border-left:3px solid var(--accent);border-radius:8px;padding:12px 16px;color:var(--t2);font-size:13px;margin-top:18px;}
   .note b{color:var(--t1);}
+  .drawer{border:1px solid var(--bd);border-radius:var(--r);padding:18px 20px;margin-top:14px;background:var(--panel2);}
+  .drawer[hidden]{display:none;}
   footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--bd);color:var(--t3);font-size:12px;}
-  @media(max-width:680px){.stats{grid-template-columns:1fr;}.frm{grid-template-columns:1fr;}}
+  @media(max-width:680px){.frm{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -106,9 +109,9 @@
   <div class="lead">
     <div class="eyebrow">40 Acre Conservation League</div>
     <h1>Forest restoration &amp; grant compliance</h1>
-    <p>Every grant, every acre treated, every vendor and every reporting deadline in one place &mdash;
-       so a report never slips and the next award is already half-written. Built for the forest: capture in
-       the field offline, sync when you&rsquo;re back in coverage.</p>
+    <p>A living system, not a spreadsheet: add a grant and its reporting rules, log treatment from the field,
+       and the desk <b>tracks every obligation and tells you what to do next</b> &mdash; what&rsquo;s due, what&rsquo;s overdue,
+       what data is missing &mdash; so a report never slips and the next award is already half-written.</p>
   </div>
 
   <div class="stats">
@@ -120,28 +123,37 @@
   <div class="progress-cap" id="prog-cap"></div>
 
   <section>
-    <div class="sec-h"><h2>Active grants</h2><span id="grant-count"></span></div>
-    <div class="grid" id="grants"></div>
-    <div class="note" style="margin-top:16px;"><b>The stewardship gap.</b> Over <b>$10M+</b> of the portfolio is restricted to <b>acquisition</b>; only <b>~$1M</b> funds long-term restoration, recreation and hydrology. The 20,000-acre goal can&rsquo;t be met on acquisition grants alone &mdash; it needs multi-year stewardship capital, impact debt, and unrestricted philanthropy. This desk exists to turn clean compliance into the evidence that unlocks it.</div>
+    <div class="sec-h"><h2>Needs attention now</h2><span id="queue-count"></span></div>
+    <div class="queue" id="queue"></div>
   </section>
 
   <section>
-    <div class="sec-h"><h2>Vendors &amp; partners</h2><span>reports cross-checked against internal assessments</span></div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Vendor</th><th>Property</th><th>Acres reported</th><th>Last invoice</th><th>Status</th></tr></thead>
-        <tbody id="vendors"></tbody>
-      </table>
+    <div class="sec-h"><h2>Grants &amp; compliance</h2><span id="grant-count"></span>
+      <span class="act"><button class="btn sm ghost" id="add-grant">+ Add grant</button></span></div>
+    <div class="drawer" id="edit-drawer" hidden>
+      <div class="frm">
+        <div><label>Funder</label><input id="e-funder" placeholder="e.g. Wildlife Conservation Board"></div>
+        <div><label>Purpose</label><input id="e-purpose" placeholder="e.g. Forest health"></div>
+        <div><label>Amount ($M)</label><input id="e-amount" type="number" step="0.01" min="0" placeholder="2.30"></div>
+        <div><label>Reporting cadence</label><select id="e-cadence">
+          <option value="">— set from grant file —</option><option value="3">Quarterly</option>
+          <option value="6">Semi-annual</option><option value="12">Annual</option></select></div>
+        <div><label>Next report due</label><input id="e-nextdue" type="date"></div>
+        <div><label>Acre target</label><input id="e-target" type="number" step="0.01" min="0" placeholder="e.g. 150"></div>
+        <div class="full"><button class="btn" id="e-save">Save grant</button>
+          <button class="btn sm ghost" id="e-cancel" style="margin-left:8px;">Cancel</button>
+          <button class="btn sm ghost" id="e-delete" hidden style="margin-left:8px;color:var(--bad);border-color:var(--bad);">Delete</button></div>
+      </div>
     </div>
+    <div class="grid" id="grants" style="margin-top:14px;"></div>
+    <div class="note" style="margin-top:16px;"><b>The stewardship gap.</b> Over <b>$10M+</b> of the portfolio is restricted to <b>acquisition</b>; only <b>~$1M</b> funds long-term restoration, recreation and hydrology. The 20,000-acre goal can&rsquo;t be met on acquisition grants alone. Clean compliance here is the evidence that unlocks stewardship capital.</div>
   </section>
 
   <section>
-    <div class="sec-h"><h2>Reporting deadlines</h2><span>reminders at 60 / 30 / 14 / 7 days</span></div>
+    <div class="sec-h"><h2>Reporting calendar</h2><span>reminders at 60 / 30 / 14 / 7 days</span></div>
     <div class="tablewrap">
-      <table>
-        <thead><tr><th>Grant</th><th>Report due</th><th>In</th><th>Owner</th></tr></thead>
-        <tbody id="deadlines"></tbody>
-      </table>
+      <table><thead><tr><th>Grant</th><th>Next report</th><th>In</th><th>Last filed</th></tr></thead>
+        <tbody id="deadlines"></tbody></table>
     </div>
   </section>
 
@@ -149,7 +161,7 @@
     <div class="sec-h"><h2>Log field treatment</h2><span>works offline &mdash; saves on this device, syncs later</span></div>
     <div class="capture">
       <p class="hint">No signal in the deep forest? Fill this out anyway. It saves on this device and marks itself
-         <b>pending</b> until you&rsquo;re back in coverage; you&rsquo;ll get an email prompt each month to capture.</p>
+         <b>pending</b> until you&rsquo;re back in coverage, then counts toward the grant&rsquo;s treated acres.</p>
       <div class="frm">
         <div><label>Date</label><input type="date" id="f-date"></div>
         <div><label>Property</label><select id="f-prop"></select></div>
@@ -165,110 +177,218 @@
   </section>
 
   <div class="note">
-    <b>What&rsquo;s live.</b> The six active grants, their $ amounts, the properties, the 404.98 acres treated and the
-    stewardship gap come from 40ACL&rsquo;s Phase I proposal and interviews &mdash; real and confirmed. Still pulling from the
-    grant files: each grant&rsquo;s <b>acre targets, reporting cadence and deadlines</b>, and the <b>vendor roster</b> (from
-    partner invoices). Field logs save to this browser (localStorage) in this draft; the production build syncs to
-    the League&rsquo;s secure record, and layers in the digital-twin spatial data (PG&amp;E, water, CalFIRE, parcels, snowpack)
-    and the forestsat.space monitoring pilot.
+    <b>A living record.</b> Grants, reporting rules and treatment logs are editable and saved on this device
+    (localStorage) in this draft &mdash; the production build syncs to the League&rsquo;s secure record (multi-device),
+    sends the email reminders, auto-drafts the reviewer-ready reports from award language, and layers in the
+    digital-twin spatial data (PG&amp;E, water, CalFIRE, parcels, snowpack) and the forestsat.space monitoring pilot.
+    Grant $ amounts and acres are real (Phase I proposal); reporting cadences &amp; acre targets are placeholders
+    until the grant files are loaded &mdash; edit any grant to set them.
   </div>
 
-  <footer>Built by HumanData for the 40 Acre Conservation League &middot; draft, from the working sessions.</footer>
+  <footer>Built by HumanData for the 40 Acre Conservation League &middot; living draft, from the working sessions.</footer>
 </div>
 
 <script>
-// ---- seed (real where known, [sample] otherwise) ----
-const PROPS = ["Tahoe Forest Gateway (Leidesdorff)", "Blue Canyon Bar"];
-// Real grant portfolio from the Phase I proposal (May 2026). $M amounts confirmed;
-// per-grant acre targets and reporting deadlines pull from the grant files.
-const GRANTS = [
-  {funder:"Wildlife Conservation Board", purpose:"Land acquisition",         amount:2.27, real:true},
-  {funder:"Wildlife Conservation Board", purpose:"Forest health",            amount:2.41, real:true},
-  {funder:"Wildlife Conservation Board", purpose:"Recreation planning",      amount:4.30, real:true},
-  {funder:"Sierra Nevada Conservancy",   purpose:"Forest health",            amount:2.30, real:true},
-  {funder:"Sierra Nevada Conservancy",   purpose:"Blue Canyon expansion",    amount:0.55, real:true},
-  {funder:"Sierra Nevada Conservancy",   purpose:"Climate Bond allocation",  amount:5.00, real:true},
-  {funder:"Legislative — Asm. Gipson", purpose:"Direct allocation",      amount:3.00, real:true, leg:true}
-];
-const VENDORS = [
-  {name:"Restoration vendor roster", prop:"from partner invoices", acres:"—", invoice:"from grant files", status:"warn"}
-];
-const CONSERVED="700+", TREATED_BASE=404.98, REMAINING=100, GOAL="20,000";
-
 const $ = s => document.querySelector(s);
 const esc = s => (s==null?"":String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const LS = "fortyacl_field_logs_v1";
-function logs(){ try{ return JSON.parse(localStorage.getItem(LS)||"[]"); }catch(e){ return []; } }
-function saveLogs(a){ try{ localStorage.setItem(LS, JSON.stringify(a)); }catch(e){} }
+const todayISO = () => new Date().toISOString().slice(0,10);
+const daysUntil = d => d ? Math.ceil((new Date(d+"T00:00:00") - new Date(todayISO()+"T00:00:00"))/86400000) : null;
+const addMonths = (d,m) => { const x=new Date(d+"T00:00:00"); x.setMonth(x.getMonth()+Number(m)); return x.toISOString().slice(0,10); };
+
+// ---- persistence ----
+const GK="fortyacl_grants_v2", LK="fortyacl_field_logs_v1";
+// Real portfolio from the Phase I proposal. cadence/nextDue/acreTarget are placeholders (set from grant files).
+const SEED = [
+  {id:"wcb-acq",  funder:"Wildlife Conservation Board", purpose:"Land acquisition",        amount:2.27, cadence:"", nextDue:"", acreTarget:null},
+  {id:"wcb-fh",   funder:"Wildlife Conservation Board", purpose:"Forest health",           amount:2.41, cadence:"", nextDue:"", acreTarget:null},
+  {id:"wcb-rec",  funder:"Wildlife Conservation Board", purpose:"Recreation planning",     amount:4.30, cadence:"", nextDue:"", acreTarget:null},
+  {id:"snc-fh",   funder:"Sierra Nevada Conservancy",   purpose:"Forest health",           amount:2.30, cadence:"", nextDue:"", acreTarget:null},
+  {id:"snc-bc",   funder:"Sierra Nevada Conservancy",   purpose:"Blue Canyon expansion",   amount:0.55, cadence:"", nextDue:"", acreTarget:null},
+  {id:"snc-cb",   funder:"Sierra Nevada Conservancy",   purpose:"Climate Bond allocation", amount:5.00, cadence:"", nextDue:"", acreTarget:null},
+  {id:"leg-gip",  funder:"Legislative — Asm. Gipson", purpose:"Direct allocation",    amount:3.00, cadence:"", nextDue:"", acreTarget:null, leg:true}
+];
+const PROPS = ["Tahoe Forest Gateway (Leidesdorff)", "Blue Canyon Bar"];
+const CONSERVED="700+", TREATED_BASE=404.98, REMAINING=100, GOAL="20,000";
+
+function load(k,f){ try{ const v=JSON.parse(localStorage.getItem(k)); return v||f; }catch(e){ return f; } }
+function save(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+let GRANTS = load(GK, null); if(!GRANTS){ GRANTS = JSON.parse(JSON.stringify(SEED)); save(GK,GRANTS); }
+function saveGrants(){ save(GK,GRANTS); }
+function logs(){ return load(LK, []); }
+function saveLogs(a){ save(LK,a); }
+function grantById(id){ return GRANTS.find(g=>g.id===id); }
+function acresFor(id){ return logs().filter(l=>l.grant===id).reduce((s,l)=>s+(parseFloat(l.acres)||0),0); }
+function lastCaptureFor(id){ const ls=logs().filter(l=>l.grant===id).map(l=>l.date).sort(); return ls.length?ls[ls.length-1]:null; }
 function loggedAcres(){ return logs().reduce((s,l)=>s+(parseFloat(l.acres)||0),0); }
+
+// ---- the compliance engine ----
+// returns {sev, state, label, chip, pct, items:[{sev,title,sub,action}]}
+function assess(g){
+  const items=[]; let sev="ok";
+  const bump=s=>{ const o={ok:0,info:1,warn:2,bad:3}; if(o[s]>o[sev]) sev=s; };
+  // reporting obligation
+  let rep;
+  if(!g.cadence || !g.nextDue){
+    rep={sev:"info", label:"Set reporting rule"};
+    items.push({sev:"info", title:"Set the reporting schedule", sub:"Add this grant's cadence and next report date from the grant file.", action:{kind:"edit", id:g.id}});
+    bump("info");
+  } else {
+    const d = daysUntil(g.nextDue);
+    if(d<0){ rep={sev:"bad", label:(-d)+"d overdue"}; items.push({sev:"bad", title:"Report overdue by "+(-d)+" days", sub:"Due "+g.nextDue+". File it and mark it done to reset the clock.", action:{kind:"file", id:g.id}}); bump("bad"); }
+    else if(d<=7){ rep={sev:"bad", label:"due in "+d+"d"}; items.push({sev:"bad", title:"Report due in "+d+" days", sub:"Due "+g.nextDue+".", action:{kind:"file", id:g.id}}); bump("bad"); }
+    else if(d<=30){ rep={sev:"warn", label:"due in "+d+"d"}; items.push({sev:"warn", title:"Report due in "+d+" days", sub:"Due "+g.nextDue+" — start the draft.", action:{kind:"file", id:g.id}}); bump("warn"); }
+    else if(d<=60){ rep={sev:"info", label:"due in "+d+"d"}; bump("info"); }
+    else rep={sev:"ok", label:"on track"};
+  }
+  // acre target progress
+  const done = acresFor(g.id);
+  let pct=null;
+  if(g.acreTarget){ pct=Math.min(100, Math.round(done/g.acreTarget*100));
+    if(pct<100 && g.nextDue && daysUntil(g.nextDue)!==null && daysUntil(g.nextDue)<=30){
+      items.push({sev:"warn", title:"Behind on treated acres", sub:done.toFixed(1)+" of "+g.acreTarget+" ac with a report due soon.", action:{kind:"log"}}); bump("warn"); }
+  }
+  // data freshness
+  const last = lastCaptureFor(g.id);
+  if(g.cadence){
+    const stale = !last || daysUntil(addMonths(last,1))<0;
+    if(stale && !g.leg){ items.push({sev:"info", title:"No recent field data", sub:last?("Last capture "+last+" — log this month's treatment."):"No treatment logged yet.", action:{kind:"log"}}); bump("info"); }
+  }
+  return {sev, rep, pct, done, items};
+}
 
 function renderStats(){
   const treated = TREATED_BASE + loggedAcres();
   $("#s-treated").textContent = Math.round(treated*100)/100;
-  $("#s-remaining").textContent = REMAINING;
-  $("#s-conserved").textContent = CONSERVED;
+  $("#s-remaining").textContent = REMAINING; $("#s-conserved").textContent = CONSERVED;
   const pct = Math.min(100, Math.round(treated/(TREATED_BASE+REMAINING)*100));
   $("#prog-bar").style.width = pct+"%";
   $("#prog-cap").textContent = pct+"% of currently-funded restoration treated · 404.98 ac treated in 2025, 200,000 bd ft milled for the Nature Center · goal "+GOAL+" ac by 2030"+
     (loggedAcres()?(" · +"+(Math.round(loggedAcres()*100)/100)+" from field logs"):"");
 }
-function renderGrants(){
-  const grants = GRANTS.filter(g=>!g.leg);
-  const total = GRANTS.reduce((s,g)=>s+g.amount,0);
-  $("#grant-count").textContent = grants.length+" active grants · 4 state-managed · $"+total.toFixed(2)+"M portfolio incl. legislative";
-  $("#grants").innerHTML = GRANTS.map(g=>{
-    const tag = g.leg ? '<span class="tag mute">legislative</span>' : '<span class="tag ok">active</span>';
-    return `<div class="card"><div class="top"><div><div class="gname">${esc(g.purpose)}</div>
-      <div class="gfun">${esc(g.funder)}</div></div>${tag}</div>
-      <div style="font-size:26px;font-weight:700;color:var(--accent);margin:10px 0 2px;letter-spacing:-.01em;">$${g.amount.toFixed(2)}M</div>
-      <div class="due">Acre target &amp; reporting cadence <b>from grant files</b></div></div>`;
+
+function renderQueue(){
+  const all=[];
+  GRANTS.forEach(g=>{ assess(g).items.forEach(it=>all.push(Object.assign({g},it))); });
+  const rank={bad:0,warn:1,info:2,ok:3};
+  all.sort((a,b)=>rank[a.sev]-rank[b.sev]);
+  $("#queue-count").textContent = all.length? all.length+" item"+(all.length>1?"s":"") : "all clear";
+  if(!all.length){ $("#queue").innerHTML='<div class="allclear"><b>&#10003; All clear.</b> Every grant has its reporting rule set and nothing is due inside 30 days.</div>'; return; }
+  $("#queue").innerHTML = all.map(it=>{
+    const btn = it.action.kind==="file" ? `<button class="btn sm" data-file="${it.g.id}">Mark report filed</button>`
+      : it.action.kind==="edit" ? `<button class="btn sm ghost" data-edit="${it.g.id}">Set schedule</button>`
+      : `<button class="btn sm ghost" data-log="1">Log treatment</button>`;
+    return `<div class="qitem sev-${it.sev}"><div class="qmain">
+      <div class="qt">${esc(it.title)}</div><div class="qs">${esc(it.sub)}</div>
+      <div class="qg">${esc(it.g.funder)} · ${esc(it.g.purpose)}</div></div>${btn}</div>`;
   }).join("");
 }
-function renderVendors(){
-  $("#vendors").innerHTML = VENDORS.map(v=>`<tr><td>${esc(v.name)}</td><td>${esc(v.prop)}</td>
-    <td><b>${esc(v.acres)}</b></td><td>${esc(v.invoice)}</td>
-    <td><span class="tag warn">pending files</span></td></tr>`).join("");
+
+function renderGrants(){
+  const grants=GRANTS.filter(g=>!g.leg); const total=GRANTS.reduce((s,g)=>s+g.amount,0);
+  $("#grant-count").textContent = grants.length+" active · 4 state-managed · $"+total.toFixed(2)+"M incl. legislative";
+  $("#grants").innerHTML = GRANTS.map(g=>{
+    const a=assess(g);
+    const chipCls = g.leg?"mute": a.sev==="bad"?"bad": a.sev==="warn"?"warn": a.sev==="info"?"info":"ok";
+    const chip = g.leg?'<span class="tag mute">legislative</span>':`<span class="tag ${chipCls}">${esc(a.rep.label)}</span>`;
+    const mini = (a.pct!=null)?`<div class="mini"><i style="width:${a.pct}%"></i></div>
+       <div class="row"><span>Treated</span><b>${a.done.toFixed(1)} / ${g.acreTarget} ac</b></div>`:
+       `<div class="row" style="margin-top:12px;"><span>Treated (logged)</span><b>${a.done.toFixed(1)} ac</b></div>`;
+    const due = g.leg?'<div class="due" style="margin-top:10px;color:var(--t3);font-size:12px;">Legislative allocation · no competitive reporting cycle</div>'
+      : `<div class="row"><span>Next report</span><b>${g.nextDue||'—'}</b></div>
+         <div class="row"><span>Cadence</span><b>${({3:'Quarterly',6:'Semi-annual',12:'Annual'})[g.cadence]||'not set'}</b></div>`;
+    const btns = g.leg?'':`<div class="cardbtns">
+      <button class="btn sm" data-file="${g.id}">Mark report filed</button>
+      <button class="btn sm ghost" data-edit="${g.id}">Edit</button></div>`;
+    return `<div class="card"><div class="top"><div><div class="gname">${esc(g.purpose)}</div>
+      <div class="gfun">${esc(g.funder)}</div></div>${chip}</div>
+      <div class="gamt" style="margin:9px 0 2px;font-size:20px;">$${g.amount.toFixed(2)}M</div>
+      ${mini}${due}${btns}</div>`;
+  }).join("");
 }
+
 function renderDeadlines(){
-  $("#deadlines").innerHTML = GRANTS.filter(g=>!g.leg).map(g=>
-    `<tr><td>${esc(g.funder)} — ${esc(g.purpose)}</td><td><b>from grant files</b></td><td><span class="tag mute">to confirm</span></td><td>Jade</td></tr>`).join("");
+  const rows = GRANTS.filter(g=>!g.leg && g.nextDue).slice().sort((a,b)=>new Date(a.nextDue)-new Date(b.nextDue));
+  const none = GRANTS.filter(g=>!g.leg && !g.nextDue);
+  let html = rows.map(g=>{ const d=daysUntil(g.nextDue);
+    const tag = d<0?`<span class="tag bad">${-d}d overdue</span>`: d<=14?`<span class="tag warn">${d}d</span>`: d<=60?`<span class="tag info">${d}d</span>`:`<span class="tag ok">${d}d</span>`;
+    return `<tr><td>${esc(g.funder)} — ${esc(g.purpose)}</td><td><b>${g.nextDue}</b></td><td>${tag}</td><td>${g.lastReport||'—'}</td></tr>`;
+  }).join("");
+  if(none.length) html += `<tr><td colspan="4" style="color:var(--t3);">${none.length} grant${none.length>1?'s':''} with no reporting date set — edit them to schedule.</td></tr>`;
+  $("#deadlines").innerHTML = html || '<tr><td colspan="4" style="color:var(--t3);">No reporting dates set yet.</td></tr>';
 }
+
 function renderLogs(){
-  const a = logs();
-  $("#logs").innerHTML = a.length ? a.slice().reverse().map(l=>
-    `<div class="logitem"><span class="la">${esc(l.acres)} ac</span>
-     <span class="lm">${esc(l.date)} · ${esc(l.prop)} · ${esc(l.vendor||'&mdash;')} · ${esc(l.type||'')}</span>
-     <span class="ls ${l.synced?'synced':'pending'}">${l.synced?'synced':'pending'}</span></div>`).join("")
+  const a=logs();
+  $("#logs").innerHTML = a.length ? a.slice().reverse().map(l=>{
+    const g=grantById(l.grant);
+    return `<div class="logitem"><span class="la">${esc(l.acres)} ac</span>
+     <span class="lm">${esc(l.date)} · ${esc(l.prop)} · ${esc(g?g.purpose:'&mdash;')} · ${esc(l.vendor||'')}</span>
+     <span class="ls ${l.synced?'synced':'pending'}">${l.synced?'synced':'pending'}</span></div>`;}).join("")
     : '<div class="empty">No field logs yet. Add one above — it saves even with no signal.</div>';
 }
+
 function fillSelects(){
   $("#f-prop").innerHTML = PROPS.map(p=>`<option>${esc(p)}</option>`).join("");
-  $("#f-grant").innerHTML = GRANTS.filter(g=>!g.leg).map((g,i)=>`<option value="${i}">${esc(g.funder)} — ${esc(g.purpose)}</option>`).join("");
-  $("#f-date").value = new Date().toISOString().slice(0,10);
+  $("#f-grant").innerHTML = GRANTS.filter(g=>!g.leg).map(g=>`<option value="${g.id}">${esc(g.funder)} — ${esc(g.purpose)}</option>`).join("");
+  $("#f-date").value = todayISO();
 }
-function netState(){
-  const on = navigator.onLine;
-  $("#netpill").innerHTML = on ? '&#9679; <b style="color:var(--ok)">online</b>' : '&#9679; <b style="color:var(--warn)">offline &mdash; logs saved locally</b>';
-  if(on){ // "sync" pending logs on reconnect (draft: just mark them synced)
-    const a=logs(); let changed=false;
-    a.forEach(l=>{ if(!l.synced){ l.synced=true; changed=true; } });
-    if(changed){ saveLogs(a); renderLogs(); }
-  }
+function renderAll(){ renderStats(); renderQueue(); renderGrants(); renderDeadlines(); renderLogs(); }
+
+// ---- actions ----
+function markFiled(id){
+  const g=grantById(id); if(!g) return;
+  g.lastReport = todayISO();
+  if(g.cadence && g.nextDue) g.nextDue = addMonths(g.nextDue, g.cadence);
+  else if(g.cadence) g.nextDue = addMonths(todayISO(), g.cadence);
+  saveGrants(); renderAll();
 }
-$("#f-save").addEventListener("click", ()=>{
-  const acres = parseFloat($("#f-acres").value);
-  if(!acres || acres<=0){ $("#f-acres").focus(); return; }
-  const rec = { date:$("#f-date").value, prop:$("#f-prop").value,
-    grant:$("#f-grant").value, vendor:$("#f-vendor").value.trim(),
-    acres:acres, type:$("#f-type").value.trim(), note:$("#f-note").value.trim(),
-    synced: navigator.onLine, at: Date.now() };
-  const a = logs(); a.push(rec); saveLogs(a);
-  $("#f-acres").value=""; $("#f-vendor").value=""; $("#f-type").value=""; $("#f-note").value="";
-  renderLogs(); renderStats();
+let editingId=null;
+function openEdit(id){
+  editingId=id||null; const g=id?grantById(id):null;
+  $("#e-funder").value=g?g.funder:""; $("#e-purpose").value=g?g.purpose:"";
+  $("#e-amount").value=g?g.amount:""; $("#e-cadence").value=g?(g.cadence||""):"";
+  $("#e-nextdue").value=g?(g.nextDue||""):""; $("#e-target").value=g&&g.acreTarget!=null?g.acreTarget:"";
+  $("#e-delete").hidden = !id; $("#edit-drawer").hidden=false;
+  $("#edit-drawer").scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("#add-grant").onclick=()=>openEdit(null);
+$("#e-cancel").onclick=()=>{ $("#edit-drawer").hidden=true; editingId=null; };
+$("#e-save").onclick=()=>{
+  const funder=$("#e-funder").value.trim(), purpose=$("#e-purpose").value.trim();
+  if(!funder||!purpose){ $("#e-funder").focus(); return; }
+  const data={ funder, purpose, amount:parseFloat($("#e-amount").value)||0,
+    cadence:$("#e-cadence").value, nextDue:$("#e-nextdue").value,
+    acreTarget: $("#e-target").value?parseFloat($("#e-target").value):null };
+  if(editingId){ Object.assign(grantById(editingId), data); }
+  else { data.id = "g-"+Date.now(); GRANTS.push(data); }
+  saveGrants(); $("#edit-drawer").hidden=true; editingId=null; fillSelects(); renderAll();
+};
+$("#e-delete").onclick=()=>{ if(editingId){ GRANTS=GRANTS.filter(g=>g.id!==editingId); saveGrants(); $("#edit-drawer").hidden=true; editingId=null; fillSelects(); renderAll(); } };
+
+// delegated clicks for file / edit / log buttons anywhere
+document.addEventListener("click",(e)=>{
+  const f=e.target.closest("[data-file]"); if(f){ markFiled(f.getAttribute("data-file")); return; }
+  const ed=e.target.closest("[data-edit]"); if(ed){ openEdit(ed.getAttribute("data-edit")); return; }
+  const lg=e.target.closest("[data-log]"); if(lg){ $("#f-acres").scrollIntoView({behavior:"smooth",block:"center"}); $("#f-acres").focus(); return; }
 });
-window.addEventListener("online", netState);
-window.addEventListener("offline", netState);
-fillSelects(); renderStats(); renderGrants(); renderVendors(); renderDeadlines(); renderLogs(); netState();
+
+$("#f-save").addEventListener("click", ()=>{
+  const acres=parseFloat($("#f-acres").value); if(!acres||acres<=0){ $("#f-acres").focus(); return; }
+  const rec={ date:$("#f-date").value, prop:$("#f-prop").value, grant:$("#f-grant").value,
+    vendor:$("#f-vendor").value.trim(), acres:acres, type:$("#f-type").value.trim(),
+    note:$("#f-note").value.trim(), synced:navigator.onLine, at:Date.now() };
+  const a=logs(); a.push(rec); saveLogs(a);
+  $("#f-acres").value=""; $("#f-vendor").value=""; $("#f-type").value=""; $("#f-note").value="";
+  renderAll();
+});
+
+function netState(){
+  const on=navigator.onLine;
+  $("#netpill").innerHTML = on ? '&#9679; <b style="color:var(--ok)">online</b>' : '&#9679; <b style="color:var(--warn)">offline &mdash; saved locally</b>';
+  if(on){ const a=logs(); let ch=false; a.forEach(l=>{ if(!l.synced){ l.synced=true; ch=true; }}); if(ch){ saveLogs(a); renderLogs(); } }
+}
+window.addEventListener("online",netState); window.addEventListener("offline",netState);
+fillSelects(); renderAll(); netState();
 </script>
 </body>
 </html>
