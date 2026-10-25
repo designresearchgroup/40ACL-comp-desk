@@ -12,8 +12,9 @@ It replaces the spreadsheet-and-manual-reconciliation workflow with one view of 
 - **Offline field capture** — log treatment from the forest with no signal; saves on-device and marks itself *pending* until back in coverage, then syncs. Monthly email prompts to capture.
 
 ## Status — draft
-- **Real** (from the interviews): the 650 / 400 / 100 acre figures, the two properties (Emigrant Gap, Leidesdorff), and the two named funders (Wildlife Conservation Board, Sierra Nevada Conservancy).
-- **Sample, pending real records**: the full six-grant list, per-grant targets, vendors, deadlines. These fill in from the Phase I proposal and the League's grant files.
+- **Verified** (from the Phase I proposal): the seven funding lines — funders, purposes, and amounts ($19.83M total), the two properties (Tahoe Forest Gateway / Leidesdorff, Blue Canyon), and the portfolio figures (404.98 ac treated 2025, 700+ conserved, 20,000-acre goal).
+- **Provisional, marked `[confirm]`**: each grant's reporting cadence is pre-filled from the funder's published grant guidelines — SNC = six-month progress reports + final (Managing Your Grant Handbook); WCB restoration/planning = final report + progress per agreement, annual assumed; WCB acquisition = closeout only (General Grant Guidelines §6.6). These are starting points to verify against each executed grant agreement's Exhibit A. Editing a grant and saving clears the `[confirm]` flag.
+- **Not yet set**: per-grant report due dates and acre targets — left blank until read from the grant agreements (or imported via the CSV template).
 - Field logs persist to `localStorage` in this draft; the production build syncs to the League's secure record (Supabase).
 
 ## Run

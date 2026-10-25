@@ -62,6 +62,7 @@
   .tag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;white-space:nowrap;}
   .tag.ok{color:var(--ok);border:1px solid var(--ok);} .tag.warn{color:var(--warn);border:1px solid var(--warn);}
   .tag.bad{color:var(--bad);border:1px solid var(--bad);} .tag.mute{color:var(--t3);border:1px solid var(--bd);} .tag.info{color:var(--gold);border:1px solid var(--gold);}
+  .confirm{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.03em;color:var(--gold);border:1px dashed var(--gold);border-radius:4px;padding:1px 5px;margin-left:6px;cursor:help;vertical-align:middle;}
   .card .mini{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;margin:12px 0 5px;}
   .card .mini > i{display:block;height:100%;background:var(--accent);}
   .card .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--t2);margin-top:5px;}
@@ -243,16 +244,24 @@ const daysUntil = d => d ? Math.ceil((new Date(d+"T00:00:00") - new Date(todayIS
 const addMonths = (d,m) => { const x=new Date(d+"T00:00:00"); x.setMonth(x.getMonth()+Number(m)); return x.toISOString().slice(0,10); };
 
 // ---- persistence ----
-const GK="fortyacl_grants_v2", LK="fortyacl_field_logs_v1";
-// Real portfolio from the Phase I proposal. cadence/nextDue/acreTarget are placeholders (set from grant files).
+const GK="fortyacl_grants_v3", LK="fortyacl_field_logs_v1";
+// Real portfolio from the Phase I proposal (amounts/funders/purposes are verified from the deck).
+// Cadence is PROVISIONAL — pre-filled from each funder's published grant guidelines as a starting
+// point (confirmed:false → shown as [confirm]). nextDue and acreTarget stay blank until verified
+// against each executed grant agreement's Exhibit A. Sources:
+//   SNC  — Managing Your Grant Handbook + Forest Health Prop1/68 Guidelines: six-month progress
+//          reports + final report; exact dates set in Exhibit A.
+//   WCB  — General Grant Guidelines (eff. 2024-08-01) §6.6: restoration/development/planning require
+//          a final report, progress cadence set per grant agreement (annual assumed); acquisition is
+//          closeout only (title + escrow docs at close), no periodic progress report.
 const SEED = [
-  {id:"wcb-acq",  funder:"Wildlife Conservation Board", purpose:"Land acquisition",        amount:2.27, cadence:"", nextDue:"", acreTarget:null},
-  {id:"wcb-fh",   funder:"Wildlife Conservation Board", purpose:"Forest health",           amount:2.41, cadence:"", nextDue:"", acreTarget:null},
-  {id:"wcb-rec",  funder:"Wildlife Conservation Board", purpose:"Recreation planning",     amount:4.30, cadence:"", nextDue:"", acreTarget:null},
-  {id:"snc-fh",   funder:"Sierra Nevada Conservancy",   purpose:"Forest health",           amount:2.30, cadence:"", nextDue:"", acreTarget:null},
-  {id:"snc-bc",   funder:"Sierra Nevada Conservancy",   purpose:"Blue Canyon expansion",   amount:0.55, cadence:"", nextDue:"", acreTarget:null},
-  {id:"snc-cb",   funder:"Sierra Nevada Conservancy",   purpose:"Climate Bond allocation", amount:5.00, cadence:"", nextDue:"", acreTarget:null},
-  {id:"leg-gip",  funder:"Legislative — Asm. Gipson", purpose:"Direct allocation",    amount:3.00, cadence:"", nextDue:"", acreTarget:null, leg:true}
+  {id:"wcb-acq",  funder:"Wildlife Conservation Board", purpose:"Land acquisition",        amount:2.27, cadence:"",  confirmed:false, closeout:true, src:"WCB Guidelines §6.6 — acquisition closeout: recorded docs, title policy, escrow statements at close; no periodic report. [confirm against grant agreement]", nextDue:"", acreTarget:null},
+  {id:"wcb-fh",   funder:"Wildlife Conservation Board", purpose:"Forest health",           amount:2.41, cadence:"12", confirmed:false, src:"WCB Guidelines §6.6 — restoration: final report required, progress cadence set per grant agreement; annual assumed. [confirm against grant agreement]", nextDue:"", acreTarget:null},
+  {id:"wcb-rec",  funder:"Wildlife Conservation Board", purpose:"Recreation planning",     amount:4.30, cadence:"12", confirmed:false, src:"WCB Guidelines §6.6 — planning: final report required, progress cadence set per grant agreement; annual assumed. [confirm against grant agreement]", nextDue:"", acreTarget:null},
+  {id:"snc-fh",   funder:"Sierra Nevada Conservancy",   purpose:"Forest health",           amount:2.30, cadence:"6",  confirmed:false, src:"SNC Managing Your Grant Handbook — six-month progress reports + final report; exact dates in Exhibit A. [confirm against grant agreement]", nextDue:"", acreTarget:null},
+  {id:"snc-bc",   funder:"Sierra Nevada Conservancy",   purpose:"Blue Canyon expansion",   amount:0.55, cadence:"6",  confirmed:false, src:"SNC Managing Your Grant Handbook — six-month progress reports + final report (confirmed $545K award to 40ACL); exact dates in Exhibit A. [confirm against grant agreement]", nextDue:"", acreTarget:null},
+  {id:"snc-cb",   funder:"Sierra Nevada Conservancy",   purpose:"Climate Bond allocation", amount:5.00, cadence:"6",  confirmed:false, src:"SNC Managing Your Grant Handbook — six-month progress reports + final report; exact dates in Exhibit A. [confirm against grant agreement]", nextDue:"", acreTarget:null},
+  {id:"leg-gip",  funder:"Legislative — Asm. Gipson", purpose:"Direct allocation",    amount:3.00, cadence:"",  confirmed:false, src:"Legislative direct allocation — reporting terms set by the administering entity / budget language, not a standard grant cycle. [confirm]", nextDue:"", acreTarget:null, leg:true}
 ];
 const PROPS = ["Tahoe Forest Gateway (Leidesdorff)", "Blue Canyon Bar"];
 const CONSERVED="700+", TREATED_BASE=404.98, REMAINING=100, GOAL="20,000";
@@ -275,9 +284,25 @@ function assess(g){
   const bump=s=>{ const o={ok:0,info:1,warn:2,bad:3}; if(o[s]>o[sev]) sev=s; };
   // reporting obligation
   let rep;
-  if(!g.cadence || !g.nextDue){
+  if(g.leg){
+    // legislative allocation — no competitive reporting cycle; terms set by administering entity
+    rep={sev:"ok", label:"legislative"};
+    return {sev, rep, pct:null, done:acresFor(g.id), items};
+  } else if(g.closeout){
+    // acquisition: no recurring report — closeout docs at project close
+    rep={sev: g.confirmed?"ok":"info", label: g.confirmed?"closeout":"closeout [confirm]"};
+    if(!g.confirmed){ items.push({sev:"info", title:"Confirm closeout basis", sub:"WCB acquisitions report at closeout (title + escrow docs), not on a cycle. Confirm against the grant agreement.", action:{kind:"edit", id:g.id}}); bump("info"); }
+  } else if(!g.cadence){
     rep={sev:"info", label:"Set reporting rule"};
-    items.push({sev:"info", title:"Set the reporting schedule", sub:"Add this grant's cadence and next report date from the grant file.", action:{kind:"edit", id:g.id}});
+    items.push({sev:"info", title:"Set the reporting schedule", sub:"Add this grant's cadence and next report date from the grant agreement (Exhibit A).", action:{kind:"edit", id:g.id}});
+    bump("info");
+  } else if(!g.confirmed || !g.nextDue){
+    // cadence pre-filled from funder guidelines but not yet verified, and/or no date set
+    const cad=({3:'quarterly',6:'semi-annual',12:'annual'})[g.cadence]||'scheduled';
+    rep={sev:"info", label: g.nextDue?"confirm cadence":cad+" [confirm]"};
+    items.push({sev:"info", title: g.confirmed?"Set the next report date":"Confirm cadence & set next date",
+      sub: (g.confirmed?"":"Pre-filled "+cad+" from the funder's guidelines. ")+"Verify against the grant agreement's Exhibit A and set the next due date.",
+      action:{kind:"edit", id:g.id}});
     bump("info");
   } else {
     const d = daysUntil(g.nextDue);
@@ -313,12 +338,16 @@ function renderHero(){
   let items=0; GRANTS.forEach(g=>items+=assess(g).items.length);
   $("#s-attention").textContent = items;
   $("#stat-attention").className = "stat "+(items>0?"warn":"good");
-  // progress = compliance readiness: active grants with a reporting schedule set
-  const scheduled = active.filter(g=>g.cadence && g.nextDue).length;
+  // progress = compliance readiness: a grant is "armed" once its cadence is confirmed and a date is
+  // set (or it's a confirmed closeout). Provisional, guideline-pre-filled cadences don't count yet.
+  const armed = g=> (g.closeout && g.confirmed) || (g.cadence && g.nextDue && g.confirmed);
+  const scheduled = active.filter(armed).length;
+  const prefilled = active.filter(g=>!armed(g) && (g.cadence||g.closeout)).length;
   const pct = active.length ? Math.round(scheduled/active.length*100) : 0;
   $("#prog-bar").style.width = pct+"%";
   const treated = Math.round((TREATED_BASE+loggedAcres())*100)/100;
-  $("#prog-cap").textContent = scheduled+" of "+active.length+" active grants have a reporting schedule set ("+pct+"% armed) · protecting $"+total.toFixed(2)+"M · "+CONSERVED+" acres conserved, "+treated+" ac treated in 2025, "+GOAL+"-acre goal by 2030";
+  const prefTxt = prefilled? " · "+prefilled+" pre-filled from funder guidelines, pending confirmation" : "";
+  $("#prog-cap").textContent = scheduled+" of "+active.length+" active grants armed with a confirmed schedule ("+pct+"%)"+prefTxt+" · protecting $"+total.toFixed(2)+"M · "+CONSERVED+" acres conserved, "+treated+" ac treated in 2025, "+GOAL+"-acre goal by 2030";
 }
 
 function renderQueue(){
@@ -348,9 +377,11 @@ function renderGrants(){
     const mini = (a.pct!=null)?`<div class="mini"><i style="width:${a.pct}%"></i></div>
        <div class="row"><span>Treated</span><b>${a.done.toFixed(1)} / ${g.acreTarget} ac</b></div>`:
        `<div class="row" style="margin-top:12px;"><span>Treated (logged)</span><b>${a.done.toFixed(1)} ac</b></div>`;
-    const due = g.leg?'<div class="due" style="margin-top:10px;color:var(--t3);font-size:12px;">Legislative allocation · no competitive reporting cycle</div>'
+    const cadTxt = g.closeout ? 'Closeout only' : (({3:'Quarterly',6:'Semi-annual',12:'Annual'})[g.cadence]||'not set');
+    const prov = (!g.confirmed && (g.cadence||g.closeout)) ? ` <span class="confirm" title="${esc(g.src||'')}">[confirm]</span>` : '';
+    const due = g.leg?`<div class="due" style="margin-top:10px;color:var(--t3);font-size:12px;">Legislative allocation · reporting terms set by the administering entity${prov?' ':''}${prov}</div>`
       : `<div class="row"><span>Next report</span><b>${g.nextDue||'—'}</b></div>
-         <div class="row"><span>Cadence</span><b>${({3:'Quarterly',6:'Semi-annual',12:'Annual'})[g.cadence]||'not set'}</b></div>`;
+         <div class="row"><span>Cadence</span><b>${cadTxt}${prov}</b></div>`;
     const btns = g.leg?'':`<div class="cardbtns">
       <button class="btn sm" data-file="${g.id}">Mark report filed</button>
       <button class="btn sm ghost" data-edit="${g.id}">Edit</button></div>`;
@@ -481,7 +512,8 @@ function doImport(){ if(!pending) return; const {data,type,mapping}=pending;
       GRANTS.push({ id:"g-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
         funder:funder||"(unknown funder)", purpose:purpose||"(unnamed)", amount:parseAmt(get("amount")),
         cadence:({quarterly:"3",quarter:"3",semiannual:"6",semi:"6",annual:"12",annually:"12",yearly:"12"}[norm(get("cadence"))]||""),
-        nextDue:(get("nextDue")||"").trim(), acreTarget:get("acreTarget")?parseFloat(String(get("acreTarget")).replace(/[^0-9.]/g,"")):null }); });
+        nextDue:(get("nextDue")||"").trim(), acreTarget:get("acreTarget")?parseFloat(String(get("acreTarget")).replace(/[^0-9.]/g,"")):null,
+        confirmed:true }); });  // user-supplied CSV data is treated as verified
     saveGrants(); fillSelects();
   } else { const a=logs();
     data.forEach(r=>{ const get=f=>mapping[f]>=0?r[mapping[f]]:"";
@@ -536,7 +568,8 @@ $("#e-save").onclick=()=>{
   if(!funder||!purpose){ $("#e-funder").focus(); return; }
   const data={ funder, purpose, amount:parseFloat($("#e-amount").value)||0,
     cadence:$("#e-cadence").value, nextDue:$("#e-nextdue").value,
-    acreTarget: $("#e-target").value?parseFloat($("#e-target").value):null };
+    acreTarget: $("#e-target").value?parseFloat($("#e-target").value):null,
+    confirmed:true };  // saving the form = verified against the grant agreement
   if(editingId){ Object.assign(grantById(editingId), data); }
   else { data.id = "g-"+Date.now(); GRANTS.push(data); }
   saveGrants(); $("#edit-drawer").hidden=true; editingId=null; fillSelects(); renderAll();
