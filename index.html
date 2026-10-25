@@ -34,7 +34,7 @@
   .stat{flex:0 0 auto;min-width:150px;background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:16px 22px 14px;}
   .stat .n{font-size:32px;font-weight:700;letter-spacing:-.02em;}
   .stat .l{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-top:2px;}
-  .stat.treated .n{color:var(--ok);} .stat.remaining .n{color:var(--warn);}
+  .stat.good .n{color:var(--ok);} .stat.warn .n{color:var(--gold);} .stat.bad .n{color:var(--bad);}
   .progress{height:10px;border-radius:999px;background:var(--panel2);border:1px solid var(--bd);overflow:hidden;margin:16px 0 2px;}
   .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));}
   .progress-cap{font-family:var(--mono);font-size:12px;color:var(--t2);}
@@ -116,9 +116,9 @@
   </div>
 
   <div class="stats">
-    <div class="stat treated"><div class="n" id="s-treated">&mdash;</div><div class="l">Acres treated (2025)</div></div>
-    <div class="stat remaining"><div class="n" id="s-remaining">&mdash;</div><div class="l">Funded, remaining</div></div>
-    <div class="stat"><div class="n" id="s-conserved">&mdash;</div><div class="l">Acres conserved</div></div>
+    <div class="stat"><div class="n" id="s-portfolio">&mdash;</div><div class="l">Under management</div></div>
+    <div class="stat" id="stat-overdue"><div class="n" id="s-overdue">&mdash;</div><div class="l">Reports overdue</div></div>
+    <div class="stat" id="stat-attention"><div class="n" id="s-attention">&mdash;</div><div class="l">Need attention now</div></div>
   </div>
   <div class="progress"><i id="prog-bar"></i></div>
   <div class="progress-cap" id="prog-cap"></div>
@@ -257,14 +257,22 @@ function assess(g){
   return {sev, rep, pct, done, items};
 }
 
-function renderStats(){
-  const treated = TREATED_BASE + loggedAcres();
-  $("#s-treated").textContent = Math.round(treated*100)/100;
-  $("#s-remaining").textContent = REMAINING; $("#s-conserved").textContent = CONSERVED;
-  const pct = Math.min(100, Math.round(treated/(TREATED_BASE+REMAINING)*100));
+function renderHero(){
+  const active = GRANTS.filter(g=>!g.leg);
+  const total = GRANTS.reduce((s,g)=>s+g.amount,0);
+  $("#s-portfolio").textContent = "$"+total.toFixed(2)+"M";
+  const overdue = active.filter(g=>g.nextDue && daysUntil(g.nextDue)<0).length;
+  $("#s-overdue").textContent = overdue;
+  $("#stat-overdue").className = "stat "+(overdue>0?"bad":"good");
+  let items=0; GRANTS.forEach(g=>items+=assess(g).items.length);
+  $("#s-attention").textContent = items;
+  $("#stat-attention").className = "stat "+(items>0?"warn":"good");
+  // progress = compliance readiness: active grants with a reporting schedule set
+  const scheduled = active.filter(g=>g.cadence && g.nextDue).length;
+  const pct = active.length ? Math.round(scheduled/active.length*100) : 0;
   $("#prog-bar").style.width = pct+"%";
-  $("#prog-cap").textContent = pct+"% of currently-funded restoration treated · 404.98 ac treated in 2025, 200,000 bd ft milled for the Nature Center · goal "+GOAL+" ac by 2030"+
-    (loggedAcres()?(" · +"+(Math.round(loggedAcres()*100)/100)+" from field logs"):"");
+  const treated = Math.round((TREATED_BASE+loggedAcres())*100)/100;
+  $("#prog-cap").textContent = scheduled+" of "+active.length+" active grants have a reporting schedule set ("+pct+"% armed) · protecting $"+total.toFixed(2)+"M · "+CONSERVED+" acres conserved, "+treated+" ac treated in 2025, "+GOAL+"-acre goal by 2030";
 }
 
 function renderQueue(){
@@ -333,7 +341,7 @@ function fillSelects(){
   $("#f-grant").innerHTML = GRANTS.filter(g=>!g.leg).map(g=>`<option value="${g.id}">${esc(g.funder)} — ${esc(g.purpose)}</option>`).join("");
   $("#f-date").value = todayISO();
 }
-function renderAll(){ renderStats(); renderQueue(); renderGrants(); renderDeadlines(); renderLogs(); }
+function renderAll(){ renderHero(); renderQueue(); renderGrants(); renderDeadlines(); renderLogs(); }
 
 // ---- actions ----
 function markFiled(id){
