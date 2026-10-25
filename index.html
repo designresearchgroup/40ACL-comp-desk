@@ -63,6 +63,11 @@
   .tag.ok{color:var(--ok);border:1px solid var(--ok);} .tag.warn{color:var(--warn);border:1px solid var(--warn);}
   .tag.bad{color:var(--bad);border:1px solid var(--bad);} .tag.mute{color:var(--t3);border:1px solid var(--bd);} .tag.info{color:var(--gold);border:1px solid var(--gold);}
   .confirm{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.03em;color:var(--gold);border:1px dashed var(--gold);border-radius:4px;padding:1px 5px;margin-left:6px;cursor:help;vertical-align:middle;}
+  .rpt-ov{display:none;position:fixed;inset:0;background:rgba(20,28,22,.5);z-index:50;align-items:center;justify-content:center;padding:24px;}
+  .rpt-box{background:var(--bg);border:1px solid var(--bd);border-radius:14px;max-width:720px;width:100%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 18px 50px rgba(0,0,0,.25);}
+  .rpt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--bd);flex-wrap:wrap;}
+  .rpt-head > div{display:flex;gap:7px;}
+  .rpt-pre{margin:0;padding:18px;overflow:auto;white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--t1);}
   .card .mini{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;margin:12px 0 5px;}
   .card .mini > i{display:block;height:100%;background:var(--accent);}
   .card .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--t2);margin-top:5px;}
@@ -269,13 +274,55 @@ const CONSERVED="700+", TREATED_BASE=404.98, REMAINING=100, GOAL="20,000";
 function load(k,f){ try{ const v=JSON.parse(localStorage.getItem(k)); return v||f; }catch(e){ return f; } }
 function save(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 let GRANTS = load(GK, null); if(!GRANTS){ GRANTS = JSON.parse(JSON.stringify(SEED)); save(GK,GRANTS); }
-function saveGrants(){ save(GK,GRANTS); }
+function saveGrants(){ save(GK,GRANTS); queuePush(); }
 function logs(){ return load(LK, []); }
-function saveLogs(a){ save(LK,a); }
+function saveLogs(a){ save(LK,a); queuePush(); }
 function grantById(id){ return GRANTS.find(g=>g.id===id); }
 function acresFor(id){ return logs().filter(l=>l.grant===id).reduce((s,l)=>s+(parseFloat(l.acres)||0),0); }
 function lastCaptureFor(id){ const ls=logs().filter(l=>l.grant===id).map(l=>l.date).sort(); return ls.length?ls[ls.length-1]:null; }
 function loggedAcres(){ return logs().reduce((s,l)=>s+(parseFloat(l.acres)||0),0); }
+
+// ---- Supabase sync (multi-device shared record) ----
+const SB_URL="https://edxkjrwcatvgxqixownc.supabase.co";
+const SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkeGtqcndjYXR2Z3hxaXhvd25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MDcyOTgsImV4cCI6MjEwNjE4MzI5OH0.0BEDQsnkXYRPXn4-P9PHBHDHoGIOTCtad50Vt4JQocA";
+const DKK="fortyacl_desk_key";
+function resolveKey(){
+  const u=new URLSearchParams(location.search).get("k");
+  if(u){ try{localStorage.setItem(DKK,u);}catch(e){}
+    try{history.replaceState(null,"",location.pathname);}catch(e){} return u; }
+  try{ return localStorage.getItem(DKK)||""; }catch(e){ return ""; }
+}
+let DESK_KEY=resolveKey();
+let SYNC = DESK_KEY ? "syncing" : "local";   // local | syncing | synced | offline | error
+let uid = ()=> (self.crypto&&crypto.randomUUID)?crypto.randomUUID():("l-"+Date.now()+Math.random().toString(36).slice(2));
+async function rpc(fn, body){
+  const r=await fetch(SB_URL+"/rest/v1/rpc/"+fn,{method:"POST",
+    headers:{apikey:SB_ANON,Authorization:"Bearer "+SB_ANON,"Content-Type":"application/json"},
+    body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(fn+" "+r.status+" "+(await r.text()).slice(0,200));
+  return r.json();
+}
+async function pullState(){
+  if(!DESK_KEY){ SYNC="local"; return false; }
+  try{
+    const d=await rpc("fortyacl_state",{p_key:DESK_KEY});
+    if(d&&Array.isArray(d.grants)){ GRANTS=d.grants; save(GK,GRANTS); save(LK, d.logs||[]); SYNC="synced"; return true; }
+  }catch(e){ console.warn("pull",e.message); SYNC = navigator.onLine?"error":"offline"; }
+  return false;
+}
+let pushT=null;
+function queuePush(){
+  if(!DESK_KEY){ SYNC="local"; netState(); return; }
+  clearTimeout(pushT); SYNC="syncing"; netState();
+  pushT=setTimeout(doPush, 650);
+}
+async function doPush(){
+  if(!DESK_KEY) return;
+  if(!navigator.onLine){ SYNC="offline"; netState(); return; }
+  try{ await rpc("fortyacl_sync",{p_key:DESK_KEY,p_grants:GRANTS,p_logs:logs()}); SYNC="synced"; }
+  catch(e){ console.warn("push",e.message); SYNC="error"; }
+  netState();
+}
 
 // ---- the compliance engine ----
 // returns {sev, state, label, chip, pct, items:[{sev,title,sub,action}]}
@@ -384,7 +431,8 @@ function renderGrants(){
          <div class="row"><span>Cadence</span><b>${cadTxt}${prov}</b></div>`;
     const btns = g.leg?'':`<div class="cardbtns">
       <button class="btn sm" data-file="${g.id}">Mark report filed</button>
-      <button class="btn sm ghost" data-edit="${g.id}">Edit</button></div>`;
+      <button class="btn sm ghost" data-edit="${g.id}">Edit</button>
+      <button class="btn sm ghost" data-report="${g.id}">Draft report</button></div>`;
     return `<div class="card"><div class="top"><div><div class="gname">${esc(g.purpose)}</div>
       <div class="gfun">${esc(g.funder)}</div></div>${chip}</div>
       <div class="gamt" style="margin:9px 0 2px;font-size:20px;">$${g.amount.toFixed(2)}M</div>
@@ -519,7 +567,7 @@ function doImport(){ if(!pending) return; const {data,type,mapping}=pending;
     data.forEach(r=>{ const get=f=>mapping[f]>=0?r[mapping[f]]:"";
       const ac=parseFloat(String(get("acres")).replace(/[^0-9.]/g,"")); if(!ac) return;
       let gid=""; const gt=norm(get("grant")); if(gt){ const m=GRANTS.find(g=>!g.leg&&(norm(g.funder).includes(gt)||gt.includes(norm(g.purpose))||norm(g.purpose).includes(gt))); if(m) gid=m.id; }
-      a.push({ date:(get("date")||todayISO()).trim(), prop:(get("prop")||PROPS[0]).trim(), grant:gid,
+      a.push({ id:uid(), date:(get("date")||todayISO()).trim(), prop:(get("prop")||PROPS[0]).trim(), grant:gid,
         vendor:(get("vendor")||"").trim(), acres:ac, type:(get("type")||"").trim(), note:"imported", synced:true, at:Date.now() }); });
     saveLogs(a);
   }
@@ -581,11 +629,36 @@ document.addEventListener("click",(e)=>{
   const f=e.target.closest("[data-file]"); if(f){ markFiled(f.getAttribute("data-file")); return; }
   const ed=e.target.closest("[data-edit]"); if(ed){ openEdit(ed.getAttribute("data-edit")); return; }
   const lg=e.target.closest("[data-log]"); if(lg){ $("#f-acres").scrollIntoView({behavior:"smooth",block:"center"}); $("#f-acres").focus(); return; }
+  const rp=e.target.closest("[data-report]"); if(rp){ draftReport(rp.getAttribute("data-report")); return; }
 });
+
+// ---- auto-drafted report (from the shared record) ----
+async function draftReport(id){
+  if(!DESK_KEY){ alert("Connect the desk to the shared record first — open it with ?k=<desk key> — then reports draft from live data."); return; }
+  const g=grantById(id);
+  try{ const md=await rpc("fortyacl_draft_report",{p_key:DESK_KEY,gid:id}); showReport(g, md); }
+  catch(e){ alert("Could not generate the report: "+e.message); }
+}
+function showReport(g, md){
+  let ov=$("#rpt-ov");
+  if(!ov){ ov=document.createElement("div"); ov.id="rpt-ov"; ov.className="rpt-ov"; document.body.appendChild(ov); }
+  const name=("40ACL_"+(g?g.purpose:"report")).replace(/[^a-z0-9]+/gi,"_")+"_progress.md";
+  ov.innerHTML=`<div class="rpt-box"><div class="rpt-head"><b>Reviewer-ready draft</b>
+    <div><button class="btn sm ghost" id="rpt-copy">Copy</button>
+    <button class="btn sm ghost" id="rpt-dl">Download .md</button>
+    <button class="btn sm ghost" id="rpt-x">Close</button></div></div>
+    <pre class="rpt-pre"></pre></div>`;
+  ov.querySelector(".rpt-pre").textContent=md;
+  ov.style.display="flex";
+  const close=()=>ov.style.display="none";
+  $("#rpt-x").onclick=close; ov.onclick=e=>{ if(e.target===ov) close(); };
+  $("#rpt-copy").onclick=()=>{ navigator.clipboard&&navigator.clipboard.writeText(md); $("#rpt-copy").textContent="Copied"; };
+  $("#rpt-dl").onclick=()=>downloadCSV(name, md);
+}
 
 $("#f-save").addEventListener("click", ()=>{
   const acres=parseFloat($("#f-acres").value); if(!acres||acres<=0){ $("#f-acres").focus(); return; }
-  const rec={ date:$("#f-date").value, prop:$("#f-prop").value, grant:$("#f-grant").value,
+  const rec={ id:uid(), date:$("#f-date").value, prop:$("#f-prop").value, grant:$("#f-grant").value,
     vendor:$("#f-vendor").value.trim(), acres:acres, type:$("#f-type").value.trim(),
     note:$("#f-note").value.trim(), synced:navigator.onLine, at:Date.now() };
   const a=logs(); a.push(rec); saveLogs(a);
@@ -594,12 +667,19 @@ $("#f-save").addEventListener("click", ()=>{
 });
 
 function netState(){
-  const on=navigator.onLine;
-  $("#netpill").innerHTML = on ? '&#9679; <b style="color:var(--ok)">online</b>' : '&#9679; <b style="color:var(--warn)">offline &mdash; saved locally</b>';
-  if(on){ const a=logs(); let ch=false; a.forEach(l=>{ if(!l.synced){ l.synced=true; ch=true; }}); if(ch){ saveLogs(a); renderLogs(); } }
+  if(!navigator.onLine && SYNC!=="local") SYNC="offline";
+  const map={
+    synced:['var(--ok)','synced'], syncing:['var(--gold)','saving&hellip;'],
+    offline:['var(--warn)','offline &mdash; saved locally'], error:['var(--warn)','sync error &mdash; saved locally'],
+    local:['var(--t3)','local only']
+  };
+  const [c,t]=map[SYNC]||map.local;
+  const hint = SYNC==="local" ? ' title="Open with ?k=<desk key> to sync across devices"' : '';
+  $("#netpill").innerHTML = '&#9679; <b style="color:'+c+'"'+hint+'>'+t+'</b>';
 }
-window.addEventListener("online",netState); window.addEventListener("offline",netState);
-fillSelects(); renderAll(); netState();
+window.addEventListener("online",()=>{ if(DESK_KEY) doPush(); netState(); });
+window.addEventListener("offline",()=>{ SYNC=DESK_KEY?"offline":"local"; netState(); });
+(async()=>{ await pullState(); fillSelects(); renderAll(); netState(); })();
 </script>
 </body>
 </html>
