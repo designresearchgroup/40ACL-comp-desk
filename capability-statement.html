@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>40ACL Capability Statement</title>
+<meta name="description" content="Capability statement for the 40 Acre Conservation League — California's first Black-led conservation land trust. Core competencies, past performance, and entity data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f5ef; --paper:#fffdf8; --panel2:#efebe0; --bd:#d8d2c2; --bd2:#e7e1d2;
+    --t1:#1e2a20; --t2:#55625a; --t3:#8a938a; --accent:#1F3F2D; --accent2:#2e5c42;
+    --gold:#C9A84C; --gold-ink:#8a6d1e; --bad:#c0564a;
+    --mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .toolbar{max-width:860px;margin:0 auto;padding:14px 20px 0;display:flex;justify-content:flex-end;gap:10px;}
+  .pbtn{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:8px;padding:8px 14px;cursor:pointer;}
+  .pbtn:hover{background:var(--accent);color:var(--bg);}
+
+  .page{max-width:860px;margin:14px auto 50px;background:var(--paper);border:1px solid var(--bd);border-radius:8px;
+        padding:34px 38px 30px;box-shadow:0 12px 40px rgba(31,63,45,.08);}
+
+  /* header */
+  .head{display:flex;align-items:center;gap:16px;border-bottom:2px solid var(--accent);padding-bottom:16px;}
+  .head img{height:58px;width:auto;}
+  .head .name{flex:1;}
+  .head h1{font-size:24px;letter-spacing:-.01em;margin:0;line-height:1.05;}
+  .head .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-top:5px;}
+  .head .kdoc{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-align:right;}
+
+  .headline{margin:16px 0 4px;font-size:16px;font-weight:600;color:var(--accent);}
+  .cols{display:grid;grid-template-columns:1.72fr 1fr;gap:26px;margin-top:14px;}
+  @media(max-width:720px){ .cols{grid-template-columns:1fr;gap:20px;} }
+
+  h2{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+     border-bottom:1px solid var(--bd);padding-bottom:5px;margin:18px 0 9px;}
+  h2:first-child{margin-top:0;}
+  p{margin:0 0 9px;color:var(--t2);}
+  p strong{color:var(--t1);}
+
+  ul{list-style:none;padding:0;margin:0;}
+  .comp li{position:relative;padding:4px 0 4px 16px;color:var(--t1);font-size:13.5px;}
+  .comp li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  .comp li b{font-weight:600;}
+  .comp li span{color:var(--t2);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 22px;}
+  @media(max-width:520px){ .grid2{grid-template-columns:1fr;} }
+
+  .diff li{position:relative;padding:5px 0 5px 18px;font-size:13px;color:var(--t1);border-bottom:1px dashed var(--bd2);}
+  .diff li:last-child{border-bottom:0;}
+  .diff li::before{content:"\2605";position:absolute;left:0;top:5px;color:var(--gold);font-size:11px;}
+
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin:4px 0 2px;}
+  .metrics div{background:var(--paper);padding:11px 12px;}
+  .metrics .n{font-size:19px;font-weight:700;color:var(--accent);letter-spacing:-.01em;}
+  .metrics .n.g{color:var(--gold-ink);}
+  .metrics .l{font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-top:2px;}
+  @media(max-width:520px){ .metrics{grid-template-columns:repeat(2,1fr);} }
+
+  /* right data rail */
+  .rail{background:var(--panel2);border:1px solid var(--bd);border-radius:8px;padding:16px 16px 14px;align-self:start;}
+  .rail h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
+  .dl{font-size:12.5px;}
+  .dl .row{padding:6px 0;border-bottom:1px solid var(--bd2);}
+  .dl .row:last-child{border-bottom:0;}
+  .dl .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);}
+  .dl .v{color:var(--t1);font-weight:500;margin-top:1px;word-break:break-word;}
+  .dl .v.big{font-family:var(--mono);font-size:13px;letter-spacing:.02em;}
+  .cf{color:var(--gold-ink);font-family:var(--mono);font-size:9px;font-weight:700;border:1px dashed var(--gold);border-radius:3px;padding:0 4px;margin-left:4px;white-space:nowrap;}
+
+  footer{max-width:860px;margin:0 auto;padding:0 38px 40px;color:var(--t3);font-size:11px;font-family:var(--mono);letter-spacing:.03em;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  footer b{color:var(--accent);}
+
+  @media print{
+    @page{size:Letter;margin:0.5in;}
+    body{background:#fff;font-size:11.5px;}
+    .toolbar{display:none;}
+    .page{box-shadow:none;border:0;border-radius:0;margin:0;max-width:none;padding:0;}
+    .metrics .n{font-size:17px;}
+    footer{padding:10px 0 0;}
+    a{color:var(--t1);}
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button class="pbtn" onclick="window.print()">Print / Save as PDF</button></div>
+
+<div class="page">
+  <div class="head">
+    <img src="logo.png" alt="40 Acre Conservation League">
+    <div class="name">
+      <h1>40 Acre Conservation League</h1>
+      <div class="tag">California's first Black-led conservation land trust</div>
+    </div>
+    <div class="kdoc">Capability<br>Statement</div>
+  </div>
+
+  <div class="headline">Conserving working forests and opening the outdoors to everyone — from the Sierra Nevada to the next generation of stewards.</div>
+
+  <div class="cols">
+    <!-- MAIN -->
+    <div class="main">
+      <h2>Overview</h2>
+      <p>The 40 Acre Conservation League is a 501(c)(3) land trust and <strong>the first and only Black-led conservation land trust in California</strong>. We acquire and steward working forestland, restore watersheds and wildfire-resilient landscapes, and build equitable access to the outdoors — pairing biodiversity with human diversity. Founded by Jade Stevens, the League has conserved <strong>700+ acres</strong> with 500+ in active pursuit, toward a <strong>20,000-acre</strong> coalition goal by 2030.</p>
+
+      <div class="metrics">
+        <div><div class="n g">$19.83M</div><div class="l">Grant capital secured</div></div>
+        <div><div class="n">700+</div><div class="l">Acres conserved</div></div>
+        <div><div class="n">404.98</div><div class="l">Acres treated, 2025</div></div>
+        <div><div class="n">20,000</div><div class="l">Acre goal · 2030</div></div>
+      </div>
+
+      <h2>Core Competencies</h2>
+      <ul class="comp grid2">
+        <li><b>Land acquisition &amp; conservation</b> <span>— fee and easement, working forestland</span></li>
+        <li><b>Forest health &amp; fuels reduction</b> <span>— wildfire-resilience treatment</span></li>
+        <li><b>Watershed &amp; hydrology restoration</b></li>
+        <li><b>Recreation planning &amp; equitable access</b></li>
+        <li><b>On-site timber milling</b> <span>— value-added stewardship</span></li>
+        <li><b>Community engagement</b> <span>— inclusive-conservation convening</span></li>
+        <li><b>Grant management &amp; compliance</b> <span>— multi-funder portfolio</span></li>
+        <li><b>Impact reporting &amp; 30x30 alignment</b></li>
+      </ul>
+
+      <h2>Past Performance</h2>
+      <p><strong>Tahoe Forest Gateway</strong> — acquisition of the historic Leidesdorff property (named for William Leidesdorff, California's first Black millionaire). <strong>Blue Canyon Bar</strong> — 26-acre Tahoe National Forest rest stop integrated into the portfolio. <strong>404.98 acres treated and 200,000 board feet milled on-site</strong> for the Nature Center in 2025. $10M+ secured for acquisition and $1M+ deployed to restoration, recreation, and hydrology across six concurrent grants. Convened Black Conservation Week at the State Capitol and featured in California's 30x30 progress reports as a model for inclusive conservation.</p>
+
+      <h2>Differentiators</h2>
+      <ul class="diff">
+        <li>California's first &amp; only Black-led conservation land trust — a trusted, distinctive voice in state and federal conservation.</li>
+        <li>Reclaiming land tied to William Leidesdorff — conservation and historical justice as one mission.</li>
+        <li>Active partnerships with the state agencies that steward California's lands (WCB, SNC, CAL FIRE) and federal land managers (USFS).</li>
+        <li>Data-driven grant compliance and continuous impact-reporting infrastructure — reviewer-ready evidence on demand.</li>
+      </ul>
+
+      <h2>Partners &amp; Funders</h2>
+      <p>Wildlife Conservation Board (WCB) · Sierra Nevada Conservancy (SNC) · California Council of Land Trusts (CCLT) · CAL FIRE · U.S. Forest Service (USFS) · Maxwell/Hanrahan Foundation · California 30x30 coalition.</p>
+    </div>
+
+    <!-- RIGHT RAIL -->
+    <aside class="rail">
+      <h3>Entity Data</h3>
+      <div class="dl">
+        <div class="row"><div class="k">Legal name</div><div class="v">40 Acre Conservation League</div></div>
+        <div class="row"><div class="k">Entity type</div><div class="v">501(c)(3) nonprofit public charity</div></div>
+        <div class="row"><div class="k">EIN</div><div class="v big">87-4154212</div></div>
+        <div class="row"><div class="k">UEI (SAM.gov)</div><div class="v big">WNQRT3DMJYB7</div></div>
+        <div class="row"><div class="k">SAM registration</div><div class="v">Active · Federal Assistance Awards · exp. Jan 2027</div></div>
+        <div class="row"><div class="k">CAGE code</div><div class="v">—<span class="cf">confirm</span></div></div>
+        <div class="row"><div class="k">NTEE</div><div class="v">C34 · Land Resources Conservation</div></div>
+        <div class="row"><div class="k">NAICS (applicable)</div><div class="v">924120 · 115310 · 541620<span class="cf">confirm/register</span></div></div>
+        <div class="row"><div class="k">IRS ruling</div><div class="v">2022</div></div>
+        <div class="row"><div class="k">FY2024 revenue</div><div class="v">$3.63M</div></div>
+        <div class="row"><div class="k">Service area</div><div class="v">Sierra Nevada / Tahoe region, California</div></div>
+        <div class="row"><div class="k">Address</div><div class="v">1017 L Street, Ste 246<br>Sacramento, CA 95814<span class="cf">confirm</span></div></div>
+        <div class="row"><div class="k">Website</div><div class="v">40acreleague.org</div></div>
+        <div class="row"><div class="k">Point of contact</div><div class="v">Jade Stevens<br>Founder &amp; Executive Director<br><span style="color:var(--t3)">email / phone</span> <span class="cf">confirm</span></div></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <span>40 Acre Conservation League · Capability Statement</span>
+  <span>Prepared with <b>HUMANDATA</b></span>
+</footer>
+
+</body>
+</html>
