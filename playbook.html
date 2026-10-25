@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>40ACL Compliance Desk — Playbook</title>
-<meta name="description" content="The compliance dashboard promised in Phase I, built: one living system for every grant, acre, deadline, and reviewer-ready report — with automatic reminders so a report never slips.">
+<title>HumanData × 40ACL — Operations Partnership Playbook</title>
+<meta name="description" content="The operating partnership to run the 40 Acre Conservation League at the scale of its ambition: HumanData facilitates compliance, data, grants and narrative — anchored by the live compliance desk — so the League's team spends its time on land and mission.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,14 +12,14 @@
   :root{
     --bg:#f7f5ef; --panel:#fffdf8; --panel2:#efebe0; --bd:#d8d2c2; --bd2:#e7e1d2;
     --t1:#1e2a20; --t2:#55625a; --t3:#8a938a; --accent:#1F3F2D; --accent2:#2e5c42;
-    --ok:#2f8f5b; --warn:#b98f1f; --bad:#c0564a; --gold:#C9A84C;
+    --ok:#2f8f5b; --warn:#b98f1f; --bad:#c0564a; --gold:#C9A84C; --gold-ink:#8a6d1e;
     --mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
     --r:14px;
   }
   @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
     --bg:#12170f; --panel:#1a2016; --panel2:#1e2519; --bd:#2f3a2a; --bd2:#283021;
-    --t1:#edf0e6; --t2:#b4bdac; --t3:#8a938a; --accent:#cbe3b8; --accent2:#b7d79e;
+    --t1:#edf0e6; --t2:#b4bdac; --t3:#8a938a; --accent:#cbe3b8; --accent2:#b7d79e; --gold-ink:#d8b65a;
   }}
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;}
@@ -28,7 +28,6 @@
   .mono{font-family:var(--mono);}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);}
 
-  /* top bar */
   header{border-bottom:1px solid var(--bd);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:10;}
   .bar{max-width:1040px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:13px;}
   .logo{height:40px;width:auto;display:block;}
@@ -36,35 +35,30 @@
   .wordmark small{display:block;color:var(--t3);font-weight:500;letter-spacing:.03em;font-size:10.5px;margin-top:1px;text-transform:none;}
   .forpill{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;padding:5px 11px;border-radius:999px;border:1px solid var(--bd);color:var(--t2);white-space:nowrap;}
 
-  /* buttons — ghost / no-fill only */
   .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:10px;padding:11px 18px;cursor:pointer;transition:.15s;}
   .btn:hover{background:var(--accent);color:var(--bg);}
-  .btn.gold{color:#8a6d1e;border-color:var(--gold);} .btn.gold:hover{background:var(--gold);color:#2a2410;}
+  .btn.gold{color:var(--gold-ink);border-color:var(--gold);} .btn.gold:hover{background:var(--gold);color:#2a2410;}
   .btn.sm{font-size:12.5px;padding:7px 13px;border-radius:8px;}
 
-  /* hero */
-  .hero{padding:58px 0 40px;}
-  .hero h1{font-size:clamp(30px,5vw,46px);line-height:1.04;letter-spacing:-.02em;margin:16px 0 14px;max-width:16ch;}
+  .hero{padding:56px 0 38px;}
+  .hero h1{font-size:clamp(30px,5vw,48px);line-height:1.03;letter-spacing:-.02em;margin:16px 0 14px;max-width:18ch;}
   .hero h1 i{font-style:normal;color:var(--accent2);}
-  .hero p.sub{font-size:clamp(16px,2.4vw,19px);color:var(--t2);max-width:60ch;margin:0 0 26px;}
+  .hero p.sub{font-size:clamp(16px,2.4vw,19px);color:var(--t2);max-width:62ch;margin:0 0 26px;}
   .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
   .cta-note{font-size:12.5px;color:var(--t3);}
 
-  /* stat strip */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin:40px 0;}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin:40px 0 8px;}
   .stat{background:var(--panel);padding:18px 20px;}
   .stat .n{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--accent);}
-  .stat .n.gold{color:#9a7c22;}
+  .stat .n.gold{color:var(--gold-ink);}
   .stat .l{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-top:4px;}
   @media(max-width:720px){ .stats{grid-template-columns:repeat(2,1fr);} }
 
-  /* sections */
-  section{padding:30px 0;border-top:1px solid var(--bd2);}
+  section{padding:32px 0;border-top:1px solid var(--bd2);}
   .sec-eye{margin-bottom:12px;}
   h2{font-size:clamp(22px,3.4vw,30px);letter-spacing:-.015em;margin:4px 0 10px;}
-  .lead-p{color:var(--t2);max-width:66ch;font-size:16.5px;margin:0 0 22px;}
+  .lead-p{color:var(--t2);max-width:68ch;font-size:16.5px;margin:0 0 22px;}
 
-  /* problem callout */
   .flag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bad);border:1px solid var(--bad);border-radius:999px;padding:3px 10px;margin-bottom:14px;}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;}
   @media(max-width:760px){ .two{grid-template-columns:1fr;gap:20px;} }
@@ -74,13 +68,15 @@
   ul.ticks li::before{content:"";position:absolute;left:4px;top:15px;width:7px;height:7px;border-radius:50%;background:var(--gold);}
   ul.ticks b{color:var(--t1);}
 
-  /* pillar cards */
-  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px;}
-  @media(max-width:860px){ .pillars{grid-template-columns:1fr;} }
-  .pill{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:20px;}
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px;}
+  @media(max-width:760px){ .pillars{grid-template-columns:1fr;} }
+  .pill{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px;}
   .pill .ic{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent2);text-transform:uppercase;}
   .pill h3{font-size:18px;margin:8px 0 7px;}
-  .pill p{color:var(--t2);font-size:14.5px;margin:0;}
+  .pill p{color:var(--t2);font-size:14.5px;margin:0 0 8px;}
+  .pill .st{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--ok);color:var(--ok);}
+  .pill .st.soon{border-color:var(--gold);color:var(--gold-ink);}
 
   /* device mock */
   .mock{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:0 14px 40px rgba(31,63,45,.10);}
@@ -89,59 +85,57 @@
   .mock-bar span{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--t3);}
   .mock-pill{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ok);border:1px solid var(--bd);border-radius:999px;padding:3px 9px;}
   .mock-body{padding:16px 16px 18px;}
-
   .qrow{display:flex;align-items:center;gap:12px;border:1px solid var(--bd);border-radius:10px;padding:11px 13px;margin-bottom:9px;}
   .qdot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
   .qdot.bad{background:var(--bad);} .qdot.warn{background:var(--gold);} .qdot.info{background:var(--accent2);}
   .qmain{flex:1;min-width:0;}
-  .qt{font-weight:600;font-size:13.5px;}
-  .qs{font-size:12px;color:var(--t3);}
+  .qt{font-weight:600;font-size:13.5px;} .qs{font-size:12px;color:var(--t3);}
   .qbtn{font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--accent);border:1px solid var(--accent);background:transparent;border-radius:7px;padding:5px 10px;white-space:nowrap;}
-  .tag{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.04em;padding:3px 7px;border-radius:999px;white-space:nowrap;}
-  .tag.warn{color:#9a7c22;border:1px solid var(--gold);} .tag.bad{color:var(--bad);border:1px solid var(--bad);}
-  .confirm{font-family:var(--mono);font-size:9px;font-weight:700;color:#9a7c22;border:1px dashed var(--gold);border-radius:4px;padding:1px 5px;margin-left:5px;}
 
-  /* grant mini card */
-  .gcard{border:1px solid var(--bd);border-radius:11px;padding:13px 15px;}
-  .gcard .gtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-  .gcard .gn{font-weight:700;font-size:14px;} .gcard .gf{font-size:11.5px;color:var(--t3);}
-  .gcard .amt{font-size:18px;font-weight:700;margin:7px 0 9px;}
-  .grow{display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0;border-top:1px dashed var(--bd2);}
-  .grow span{color:var(--t3);} .grow b{color:var(--t1);}
+  /* roles */
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:700px){ .roles{grid-template-columns:1fr;} }
+  .role{border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px;background:var(--panel);}
+  .role h3{font-size:16px;margin:0 0 4px;}
+  .role .who{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+  .role.hd{border-color:var(--accent);} .role.hd .who{color:var(--accent);}
+  .role ul{list-style:none;padding:0;margin:0;}
+  .role li{position:relative;padding:6px 0 6px 18px;font-size:14px;color:var(--t2);border-bottom:1px dashed var(--bd2);}
+  .role li:last-child{border-bottom:0;}
+  .role li::before{content:"";position:absolute;left:2px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold);}
 
-  /* email mock */
-  .email{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:0 14px 40px rgba(31,63,45,.10);}
-  .email .ehead{padding:14px 18px;border-bottom:1px solid var(--bd2);font-size:13px;}
-  .email .ehead .from{font-weight:600;} .email .ehead .meta{color:var(--t3);font-size:12px;}
-  .email .ebody{padding:20px 20px 22px;}
-  .email .esub{font-size:18px;font-weight:700;margin:2px 0 4px;}
-  .etable{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
-  .etable td{padding:7px 8px;border-bottom:1px solid var(--bd2);}
-  .etable .dl-bad{color:var(--bad);font-weight:600;white-space:nowrap;}
-  .etable .dl-warn{color:#9a7c22;font-weight:600;white-space:nowrap;}
-  .etable .dl-mute{color:var(--t2);white-space:nowrap;}
+  /* phases / roadmap */
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:760px){ .phases{grid-template-columns:1fr;} }
+  .phase{border:1px solid var(--bd);border-radius:var(--r);padding:20px;background:var(--panel);position:relative;}
+  .phase .ph{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);}
+  .phase h3{font-size:17px;margin:5px 0 4px;}
+  .phase .when{font-size:12px;color:var(--t3);font-family:var(--mono);margin-bottom:10px;}
+  .phase ul{list-style:none;padding:0;margin:0;}
+  .phase li{position:relative;padding:5px 0 5px 16px;font-size:13.5px;color:var(--t2);}
+  .phase li::before{content:"\2192";position:absolute;left:0;top:5px;color:var(--accent2);font-size:12px;}
+  .phase.now{border-color:var(--accent);}
+  .phase.now .ph{color:var(--accent);}
 
-  /* report mock */
-  .report{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--t1);}
-  .report h4{font-family:var(--sans);font-size:15px;margin:0 0 2px;}
-  .report .muted{color:var(--t3);}
+  /* engagement */
+  .engage{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;align-items:start;}
+  @media(max-width:760px){ .engage{grid-template-columns:1fr;} }
+  .price{border:1px solid var(--accent);border-radius:var(--r);padding:22px 24px;background:var(--panel);}
+  .price .amt{font-size:30px;font-weight:700;letter-spacing:-.02em;color:var(--accent);}
+  .price .amt small{font-size:15px;color:var(--t2);font-weight:500;}
+  .price .sub{font-size:13.5px;color:var(--t2);margin:4px 0 14px;}
+  .price ul{list-style:none;padding:0;margin:0;}
+  .price li{position:relative;padding:6px 0 6px 20px;font-size:13.5px;color:var(--t2);}
+  .price li::before{content:"\2713";position:absolute;left:0;top:6px;color:var(--ok);font-weight:700;}
 
-  /* steps */
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  @media(max-width:760px){ .steps{grid-template-columns:1fr;} }
-  .step{border:1px solid var(--bd);border-radius:var(--r);padding:18px 20px;background:var(--panel);}
-  .step .num{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:700;}
-  .step h3{font-size:16px;margin:6px 0 6px;}
-  .step p{color:var(--t2);font-size:14px;margin:0;}
+  .thesis{font-size:clamp(19px,2.8vw,25px);line-height:1.35;color:var(--t1);max-width:26ch;font-weight:600;letter-spacing:-.01em;}
+  .thesis em{font-style:normal;color:var(--accent2);}
 
-  /* close */
   .close{border:1px solid var(--accent);border-radius:var(--r);padding:34px;text-align:center;margin:12px 0 0;}
   .close h2{margin:0 0 10px;}
-  .close p{color:var(--t2);max-width:54ch;margin:0 auto 20px;}
+  .close p{color:var(--t2);max-width:56ch;margin:0 auto 20px;}
   footer{border-top:1px solid var(--bd);margin-top:46px;padding:26px 0 60px;color:var(--t3);font-size:13px;}
   footer .mono{color:var(--accent);font-weight:700;letter-spacing:.09em;}
-  .thesis{font-size:clamp(19px,2.8vw,25px);line-height:1.35;color:var(--t1);max-width:24ch;font-weight:600;letter-spacing:-.01em;}
-  .thesis em{font-style:normal;color:var(--accent2);}
 </style>
 </head>
 <body>
@@ -149,7 +143,7 @@
   <div class="bar">
     <img class="logo" src="logo.png" alt="40 Acre Conservation League">
     <div class="wordmark">HUMANDATA<small>× 40 Acre Conservation League</small></div>
-    <div class="forpill">Prepared for Jade Stevens</div>
+    <div class="forpill">Operations Partnership · Playbook</div>
   </div>
 </header>
 
@@ -157,157 +151,176 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="eyebrow">Compliance Desk · Phase I delivery</div>
-    <h1>The dashboard you were promised — <i>built.</i></h1>
-    <p class="sub">Six grants, four state-monitored, $19.83M under management — today that lives in spreadsheets and email threads. This is one living system that holds every grant, acre, vendor and deadline, tells your team what to do next, and turns clean compliance into the evidence that unlocks stewardship capital.</p>
+    <div class="eyebrow">The way forward · HumanData × 40ACL</div>
+    <h1>Run the League at the scale of its <i>ambition.</i></h1>
+    <p class="sub">A land trust with $19.83M under management and a 20,000-acre goal can't be run out of spreadsheets and inboxes. This is the operating partnership: HumanData facilitates the League's operations — compliance, data, grants and the narrative that wins capital — so the team spends its time on land and mission, not reconciliation. The first system is already live.</p>
     <div class="cta-row">
-      <a class="btn" href="index.html">Open the live desk &rarr;</a>
-      <a class="btn gold" href="#notifications">See the notifications</a>
-      <span class="cta-note">Working app — not a mockup.</span>
+      <a class="btn" href="index.html">Open the live compliance desk &rarr;</a>
+      <a class="btn gold" href="#proof">See what's already built</a>
     </div>
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="n gold">$19.83M</div><div class="l">Under management</div></div>
+    <div class="stat"><div class="n gold">$19.83M</div><div class="l">Grant capital managed</div></div>
     <div class="stat"><div class="n">6 / 4</div><div class="l">Grants / state-monitored</div></div>
-    <div class="stat"><div class="n">404.98</div><div class="l">Acres treated, 2025</div></div>
-    <div class="stat"><div class="n">20,000</div><div class="l">Acre goal by 2030</div></div>
+    <div class="stat"><div class="n">700+</div><div class="l">Acres conserved</div></div>
+    <div class="stat"><div class="n">20,000</div><div class="l">Acre goal · 2030</div></div>
   </div>
 
-  <!-- PROBLEM -->
+  <!-- THE SITUATION -->
   <section>
-    <div class="flag">● Critical blocker · Phase I</div>
-    <div class="two">
-      <div>
-        <h2>Post-award compliance drift</h2>
-        <p class="lead-p">As the portfolio grows, reporting deadlines, tax-credit documentation and treatment-dashboard updates get harder to hold. One missed report is a crack in the record the next funder reads. The acquisition wins are visible; the stewardship work that proves them is not — yet.</p>
-      </div>
-      <ul class="ticks">
-        <li><b>Six concurrent grants</b> — four monitored directly by state agencies (WCB, SNC) — tracked across disconnected spreadsheets and inboxes.</li>
-        <li><b>Reporting cadence varies by funder</b> and consumes scarce staff time, scramble by scramble.</li>
-        <li><b>80%+ of secured capital is acquisition</b>; ~$1M funds long-term stewardship. The 20K-acre goal can't be met on acquisition grants alone.</li>
-        <li><b>Reactive reporting</b> where funders reward proactive, on-time impact — the storytelling layer has to catch up to the fieldwork.</li>
-      </ul>
-    </div>
+    <div class="eyebrow sec-eye">Where the League stands</div>
+    <h2>A land trust ready for its second inning</h2>
+    <p class="lead-p">The acquisition engine works — 700+ acres conserved, 500+ in pursuit, $10M+ secured. But 80%+ of that capital is restricted to acquisition, and every new acre adds linear staff burden because the infrastructure to run it hasn't caught up to the ambition. Three things stand between here and 20,000 acres:</p>
+    <ul class="ticks">
+      <li><span class="flag" style="margin:0 8px 0 0;">● Critical</span> <b>Post-award compliance drift.</b> Six concurrent grants, four monitored directly by state agencies, tracked in disconnected spreadsheets — reporting deadlines and tax-credit documentation easy to miss as the portfolio grows.</li>
+      <li><b>Spatial data fragmentation.</b> PG&E, water districts, CAL FIRE fuels, parcels and snowpack live in separate portals. Every stewardship decision means manual cross-referencing; the digital twin doesn't exist yet.</li>
+      <li><b>Stewardship funding gap.</b> ~$1M for long-term restoration against $10M+ for acquisition. The 20K-acre goal needs multi-year stewardship capital, impact debt and aligned philanthropy — which funders give to what they can see.</li>
+    </ul>
   </section>
 
-  <!-- THREE PILLARS -->
-  <section>
-    <div class="eyebrow sec-eye">What we built</div>
-    <h2>One system, three moving parts</h2>
-    <p class="lead-p">Not a prettier spreadsheet — a compliance engine with a shared record underneath it and notifications on top. Here is the whole of it.</p>
-    <div class="pillars">
-      <div class="pill">
-        <div class="ic">01 · The app</div>
-        <h3>A living compliance engine</h3>
-        <p>Every grant carries its status — on-track, due-soon, overdue, data-stale — and the desk ranks what needs attention now. Filing a report resets the clock automatically.</p>
-      </div>
-      <div class="pill">
-        <div class="ic">02 · The database</div>
-        <h3>One shared record</h3>
-        <p>Grants, acres, vendors and logs sync across every device through a secure record. It works offline in the forest and reconciles when back in coverage. Drop in a CSV and it maps itself.</p>
-      </div>
-      <div class="pill">
-        <div class="ic">03 · Notifications</div>
-        <h3>Nothing slips</h3>
-        <p>Automatic email reminders before every deadline, and reviewer-ready progress reports drafted straight from the record — so a report is never written from scratch, or late.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE APP -->
-  <section>
+  <!-- PROOF: THE DESK -->
+  <section id="proof">
     <div class="two">
       <div>
-        <div class="eyebrow sec-eye">The app</div>
-        <h2>It tells you what to do next</h2>
-        <p class="lead-p">Open the desk and the first thing you see is the queue — ranked by what's most at risk. Each grant shows its reporting status and its funder-set target. The cadences are pre-filled from each funder's published guidelines and clearly marked <span class="confirm">[confirm]</span> until you verify them against the signed agreement — honest by default, never a guessed deadline passed off as fact.</p>
+        <div class="eyebrow sec-eye">The proof · already delivered</div>
+        <h2>The compliance desk is live</h2>
+        <p class="lead-p">We didn't write a plan and send an invoice — we built the first system. The compliance desk holds every grant, acre, vendor and deadline in one shared record, ranks what needs attention now, reminds the team before every deadline, and drafts reviewer-ready reports straight from the data. It runs offline in the field and syncs when back in coverage. <b>This is the partnership working, not a promise.</b></p>
+        <a class="btn sm" href="index.html">Open the desk &rarr;</a>
       </div>
       <div class="mock" aria-hidden="true">
         <div class="mock-bar"><i></i><i></i><i></i><span>40ACL Compliance Desk</span><span class="mock-pill">● synced</span></div>
         <div class="mock-body">
-          <div class="qrow"><span class="qdot bad"></span><div class="qmain"><div class="qt">Report overdue by 6 days</div><div class="qs">WCB · Forest health — file and reset the clock</div></div><button class="qbtn">Mark filed</button></div>
-          <div class="qrow"><span class="qdot warn"></span><div class="qmain"><div class="qt">Report due in 21 days</div><div class="qs">SNC · Blue Canyon — start the draft</div></div><button class="qbtn">Mark filed</button></div>
-          <div class="qrow"><span class="qdot info"></span><div class="qmain"><div class="qt">Confirm cadence &amp; set next date</div><div class="qs">SNC · Climate Bond — pre-filled semi-annual</div></div><button class="qbtn">Set schedule</button></div>
+          <div class="qrow"><span class="qdot bad"></span><div class="qmain"><div class="qt">Report overdue by 6 days</div><div class="qs">WCB · Forest health</div></div><button class="qbtn">Mark filed</button></div>
+          <div class="qrow"><span class="qdot warn"></span><div class="qmain"><div class="qt">Report due in 21 days</div><div class="qs">SNC · Blue Canyon</div></div><button class="qbtn">Mark filed</button></div>
+          <div class="qrow"><span class="qdot info"></span><div class="qmain"><div class="qt">Draft report ready</div><div class="qs">WCB · Forest health — 206.7 ac logged</div></div><button class="qbtn">Open</button></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- THE DATABASE -->
+  <!-- OPERATING MODEL -->
   <section>
-    <div class="two">
-      <div class="mock" aria-hidden="true">
-        <div class="mock-bar"><i></i><i></i><i></i><span>Portfolio · live record</span><span class="mock-pill">● synced</span></div>
-        <div class="mock-body" style="display:grid;gap:10px;">
-          <div class="gcard">
-            <div class="gtop"><div><div class="gn">Forest health</div><div class="gf">Wildlife Conservation Board</div></div><span class="tag bad">due in 6d</span></div>
-            <div class="amt">$2.41M</div>
-            <div class="grow"><span>Treated (logged)</span><b>206.7 ac</b></div>
-            <div class="grow"><span>Next report</span><b>2026-12-15</b></div>
-            <div class="grow"><span>Cadence</span><b>Annual</b></div>
-          </div>
-          <div class="gcard">
-            <div class="gtop"><div><div class="gn">Blue Canyon expansion</div><div class="gf">Sierra Nevada Conservancy</div></div><span class="tag warn">semi-annual <span class="confirm">[confirm]</span></span></div>
-            <div class="amt">$0.55M</div>
-            <div class="grow"><span>Treated (logged)</span><b>38.2 ac</b></div>
-            <div class="grow"><span>Next report</span><b>&mdash;</b></div>
-          </div>
-        </div>
+    <div class="eyebrow sec-eye">The operating model</div>
+    <h2>Four systems, one partner running them</h2>
+    <p class="lead-p">HumanData facilitates the operations the League's mission depends on but shouldn't have to staff. The compliance desk is the first; the other three build on the same record.</p>
+    <div class="pillars">
+      <div class="pill">
+        <div class="ic">01 · Compliance &amp; reporting</div>
+        <h3>The portfolio runs itself <span class="st">live</span></h3>
+        <p>The desk tracks every obligation, reminds ahead of every deadline, and drafts reviewer-ready reports from the record. No report slips; no scramble.</p>
       </div>
-      <div>
-        <div class="eyebrow sec-eye">The database</div>
-        <h2>The record that compounds</h2>
-        <p class="lead-p">Every acre treated, every vendor invoice, every filed report lands in one secure record — not a folder of spreadsheets that only one person can reconcile. That record is what turns compliance into capital: a <b>continuous evidence base</b> that makes the next proposal twice as fast to write and twice as credible to read.</p>
-        <ul class="ticks">
-          <li><b>Syncs across every device</b> — office, phone, field tablet — from one source of truth.</li>
-          <li><b>Offline field capture</b> — log treatment with no signal; it saves on-device and syncs when back in coverage.</li>
-          <li><b>CSV in, organized out</b> — drop a grant list or treatment log and the desk detects what it is and maps the columns.</li>
+      <div class="pill">
+        <div class="ic">02 · Data infrastructure</div>
+        <h3>From one record to a digital twin <span class="st soon">next</span></h3>
+        <p>The shared record today; the digital twin next — PG&E, water, CAL FIRE fuels, parcels and snowpack layered into one working map, so a stewardship decision is one query, not a day of cross-referencing.</p>
+      </div>
+      <div class="pill">
+        <div class="ic">03 · Grants &amp; capital</div>
+        <h3>Find, draft, win — and diversify <span class="st soon">next</span></h3>
+        <p>Sourcing, drafting and compliance across the multi-funder portfolio, then diversification into family offices, impact debt and the federal pipeline (NRCS, USFS, IRA). Clean compliance makes the next proposal twice as fast and twice as credible.</p>
+      </div>
+      <div class="pill">
+        <div class="ic">04 · Narrative &amp; positioning</div>
+        <h3>The story catches up to the work <span class="st soon">next</span></h3>
+        <p>Impact reporting and the funder-facing assets — capability statement, 30x30 co-authorship, the pitch that puts Jade in the rooms where the next $50M is allocated. Funders fund what they can see.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISION OF LABOR -->
+  <section>
+    <div class="eyebrow sec-eye">How we split the work</div>
+    <h2>You lead the mission. We run the machine.</h2>
+    <div class="roles">
+      <div class="role">
+        <div class="who">40ACL leads</div>
+        <h3>Mission, land &amp; relationships</h3>
+        <ul>
+          <li>The conservation strategy and which land to pursue</li>
+          <li>Funder, agency and community relationships</li>
+          <li>Field stewardship and the on-the-ground decisions</li>
+          <li>The voice, the vision, and every final call</li>
+        </ul>
+      </div>
+      <div class="role hd">
+        <div class="who">HumanData facilitates</div>
+        <h3>The systems that carry it</h3>
+        <ul>
+          <li>The compliance desk and every reporting deadline</li>
+          <li>The shared data record and the digital-twin build</li>
+          <li>Grant sourcing, drafting and post-award compliance</li>
+          <li>Impact reporting, capability assets and the capital narrative</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- NOTIFICATIONS -->
-  <section id="notifications">
-    <div class="eyebrow sec-eye">Notifications</div>
-    <h2>A report never slips through</h2>
-    <p class="lead-p">The desk watches every deadline so your team doesn't have to. A daily job emails one clean digest of what's coming due — 60, 30, 14, 7 days out and overdue — straight to the people responsible. Report ahead of the funding cycle, not at the deadline.</p>
-    <div class="email" role="img" aria-label="Sample reminder email from the compliance desk">
-      <div class="ehead">
-        <div class="from">HumanData — 40ACL Desk &lt;desk@humandata.id&gt;</div>
-        <div class="meta">to: 40 Acre Conservation League · subject: 40ACL compliance — 3 reports due soon</div>
+  <!-- WAY FORWARD -->
+  <section>
+    <div class="eyebrow sec-eye">The way forward</div>
+    <h2>Build · Grow · Scale</h2>
+    <p class="lead-p">Anchored in what's already real — the desk — and sequenced so each phase funds the next.</p>
+    <div class="phases">
+      <div class="phase now">
+        <div class="ph">Now · Q4 2026</div>
+        <h3>Go live</h3>
+        <div class="when">Build on the desk</div>
+        <ul>
+          <li>Load real reporting dates &amp; acre targets from each grant agreement</li>
+          <li>Switch reminders live across all 6 grants</li>
+          <li>First auto-drafted reports filed from the record</li>
+          <li>Capability statement + SAM / registration cleanup</li>
+        </ul>
       </div>
-      <div class="ebody">
-        <div class="eyebrow">40 Acre Conservation League · Compliance Desk</div>
-        <div class="esub">Reports coming due</div>
-        <p style="color:var(--t2);margin:0 0 8px;font-size:14px;">The following grant reports are due within 60 days. File on time to keep the portfolio clean.</p>
-        <table class="etable">
-          <tr><td>Wildlife Conservation Board · Forest health</td><td class="dl-mute">Dec 15, 2026</td><td class="dl-bad">in 6d</td></tr>
-          <tr><td>Sierra Nevada Conservancy · Blue Canyon expansion</td><td class="dl-mute">Jan 09, 2027</td><td class="dl-warn">in 21d · [confirm]</td></tr>
-          <tr><td>Sierra Nevada Conservancy · Forest health</td><td class="dl-mute">Feb 02, 2027</td><td class="dl-mute">in 45d · [confirm]</td></tr>
-        </table>
-        <a class="btn sm" href="index.html">Open the desk &rarr;</a>
-        <p style="color:var(--t3);font-size:12px;margin:16px 0 0;">Dates marked [confirm] are provisional, pre-filled from funder guidelines — verified against each grant agreement.</p>
+      <div class="phase">
+        <div class="ph">Grow · 2027</div>
+        <h3>Diversify</h3>
+        <div class="when">Infrastructure + capital</div>
+        <ul>
+          <li>Digital twin v1 — wildfire + snowpack + hydrology</li>
+          <li>Stewardship funding memo, board-signed</li>
+          <li>Family-office / impact-debt round opened</li>
+          <li>forestsat.space pilot at Gateway Park</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="ph">Scale · 2028</div>
+        <h3>Replicate</h3>
+        <div class="when">Coalition + endowment</div>
+        <ul>
+          <li>20,000-acre coalition convened with peer trusts</li>
+          <li>Sustained federal pipeline (NRCS, USFS, IRA)</li>
+          <li>Endowment campaign launched ($25M+ target)</li>
+          <li>The model documented for national export</li>
+        </ul>
       </div>
     </div>
-    <p class="cta-note" style="margin-top:14px;">Built and ready to switch on — reminders turn live the moment your reporting dates are loaded and you name who receives them.</p>
   </section>
 
-  <!-- AUTO REPORT -->
+  <!-- ENGAGEMENT -->
   <section>
-    <div class="two">
+    <div class="eyebrow sec-eye">How we partner</div>
+    <h2>Aligned so we're paid when you win</h2>
+    <div class="engage">
       <div>
-        <div class="eyebrow sec-eye">Reviewer-ready reports</div>
-        <h2>The report writes its first draft</h2>
-        <p class="lead-p">One click on any grant assembles a progress report from the live record — award, reporting period, treated-acre summary, the full field-log table, and the source basis for every figure. Your team edits and attaches exhibits instead of starting from a blank page.</p>
+        <p class="lead-p">The Hybrid model keeps the base light and ties the upside to results: a low monthly retainer for the operating work, plus a success fee only on the awards HumanData helps win. Better data raises win rates, higher win rates fund the partnership — it pays for itself as it works.</p>
+        <ul class="ticks">
+          <li><b>Base retainer</b> — strategy, compliance review and capital-introduction work, every month.</li>
+          <li><b>Success fee</b> — a percentage only on grants or capital HumanData led the drafting or sourcing on.</li>
+          <li><b>Compliance &amp; tech sprint</b> — the one-time migration from spreadsheets to the unified desk + digital-twin foundation, waived with a 12-month commitment.</li>
+        </ul>
       </div>
-      <div class="report" aria-hidden="true">
-        <h4>40 Acre Conservation League — Progress Report</h4>
-        <div class="muted">Forest health · Wildlife Conservation Board</div>
-        <div style="margin:10px 0;"><b>Award:</b> $2.41M &nbsp; <b>Cadence:</b> Annual<br><b>Period:</b> 2026-06-01 → 2026-12-15</div>
-        <div><b>Treatment summary</b><br>• 206.7 ac treated across 14 logged operations<br>• Funder target: 150 ac (138% to target)</div>
-        <div style="margin-top:10px;" class="muted">| Date | Property | Vendor | Acres |<br>| 2026-10-20 | Tahoe Forest Gateway | Sierra Fuels | 12.5 |<br>| 2026-09-28 | Blue Canyon | Tahoe Crew | 18.0 |<br>…</div>
+      <div class="price">
+        <div class="eyebrow">Recommended · Hybrid</div>
+        <div class="amt" style="margin-top:6px;">$3,500<small>/mo</small> <span style="color:var(--gold-ink);">+ 3%</span></div>
+        <div class="sub">Base retainer + success fee on HumanData-led awards</div>
+        <ul>
+          <li>12 hrs/mo strategy, compliance &amp; capital intros</li>
+          <li>3% only on awards we helped win</li>
+          <li>Tech sprint waived with 12-month term</li>
+          <li>Two-week notice, both ways</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -316,25 +329,14 @@
   <section>
     <div class="two" style="align-items:center;">
       <div class="thesis">Clean compliance is the <em>evidence</em> that unlocks the next tranche of stewardship capital.</div>
-      <p class="lead-p" style="margin:0;">Family offices and impact funders fund what they can see. State-managed grant compliance is the floor of operational maturity — the desk makes it automatic, so the team's time goes to the $50M rooms, not the reconciliation. The record you keep clean this year is the proposal you win next year.</p>
-    </div>
-  </section>
-
-  <!-- WHAT'S NEXT -->
-  <section>
-    <div class="eyebrow sec-eye">What's next</div>
-    <h2>Three steps to live</h2>
-    <div class="steps">
-      <div class="step"><div class="num">01</div><h3>Load the real dates</h3><p>Pull the reporting schedules and acre targets from each signed grant agreement's Exhibit A — replacing the provisional [confirm] cadences with the exact deadlines.</p></div>
-      <div class="step"><div class="num">02</div><h3>Switch on reminders</h3><p>Name who receives the digest and flip reminders live. From then on, every deadline announces itself ahead of time.</p></div>
-      <div class="step"><div class="num">03</div><h3>Work the queue</h3><p>The team opens the desk, logs treatment from the field, and files against what's ranked at the top. The record compounds from day one.</p></div>
+      <p class="lead-p" style="margin:0;">Compliance, data and narrative work as one system. Run that system well and the League stops trading staff time for every new acre — and Jade's voice belongs in the rooms where the next $50M gets allocated. The desk is the first proof. This is the partnership that carries it to 20,000.</p>
     </div>
   </section>
 
   <!-- CLOSE -->
   <div class="close">
-    <h2>See it with your own portfolio in it</h2>
-    <p>The desk is already loaded with your six grants and the $19.83M under management. Open it, then let's load the real dates and go live.</p>
+    <h2>Start where the proof already is</h2>
+    <p>The desk is live with your six grants and the $19.83M under management. Open it, load the real dates, and go live — then we build the next system together.</p>
     <a class="btn" href="index.html">Open the live desk &rarr;</a>
   </div>
 
@@ -342,8 +344,8 @@
 
 <footer>
   <div class="wrap">
-    <span class="mono">HUMANDATA</span> · Compliance, data, and narrative as one system.<br>
-    Built from the 40 Acre Conservation League working sessions · the Compliance Dashboard committed in the Phase I engagement.
+    <span class="mono">HUMANDATA</span> · Compliance, data and narrative as one system.<br>
+    Prepared for the 40 Acre Conservation League partnership · anchored by the Phase I engagement and the live compliance desk.
   </div>
 </footer>
 
