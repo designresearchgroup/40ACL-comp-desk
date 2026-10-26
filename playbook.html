@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
 <title>HumanData × 40ACL — Operations Partnership Playbook</title>
 <meta name="description" content="The operating partnership to run the 40 Acre Conservation League at the scale of its ambition: HumanData facilitates compliance, data, grants and narrative — anchored by the live compliance desk — so the League's team spends its time on land and mission.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,17 +11,14 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5ef; --panel:#fffdf8; --panel2:#efebe0; --bd:#d8d2c2; --bd2:#e7e1d2;
+    color-scheme: light;   /* light only — matched to 40acreleague.org (white + forest green) */
+    --bg:#ffffff; --panel:#ffffff; --panel2:#f3f1ea; --bd:#ddd7c8; --bd2:#ebe6d9;
     --t1:#1e2a20; --t2:#55625a; --t3:#8a938a; --accent:#1F3F2D; --accent2:#2e5c42;
     --ok:#2f8f5b; --warn:#b98f1f; --bad:#c0564a; --gold:#C9A84C; --gold-ink:#8a6d1e;
     --mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
     --r:14px;
   }
-  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-    --bg:#12170f; --panel:#1a2016; --panel2:#1e2519; --bd:#2f3a2a; --bd2:#283021;
-    --t1:#edf0e6; --t2:#b4bdac; --t3:#8a938a; --accent:#cbe3b8; --accent2:#b7d79e; --gold-ink:#d8b65a;
-  }}
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;}
   a{color:var(--accent2);text-decoration:none;}
